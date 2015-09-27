@@ -1,0 +1,30 @@
+{
+  "name": "www.victorsemperevidal.com",
+  "version": "1.0.0",
+  "description": "Portfolio",
+  "main": "public/index.html",
+  "keywords": [
+    "game",
+    "developer",
+    "app",
+    "developer",
+    "software",
+    "engineer"
+  ],
+  "authors": [
+    "Victor Sempere Vidal"
+  ],
+  "license": "MIT",
+  "homepage": "http://www.victorsemperevidal.com",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "bootstrap": "~3.3.5",
+    "enchant": "~0.8.2"
+  }
+}
