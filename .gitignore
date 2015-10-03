@@ -10,4 +10,3 @@ node_modules/**
 a.bat
 dev/assets/bower/**
 !node_modules/gulp/package.json
-npm-debug.log

@@ -1,0 +1,26 @@
+{
+  "name": "pacmanjs",
+  "version": "1.0.0",
+  "description": "Pac-man version in JS",
+  "main": "http://www.victorsemperevidal.com/index.html",
+  "dependencies": {
+    "gulp": "^3.9.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/victorsempere/pacmanjs.git"
+  },
+  "keywords": [
+    "pacman"
+  ],
+  "author": "Victor Sempere",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/victorsempere/pacmanjs/issues"
+  },
+  "homepage": "https://github.com/victorsempere/pacmanjs#readme"
+}
