@@ -25,6 +25,6 @@
   ],
   "devDependencies": {
     "bootstrap": "~3.3.5",
-    "enchant": "~0.8.2"
+    "enchant.js-builds": "~0.8.2"
   }
 }
