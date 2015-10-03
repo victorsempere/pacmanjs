@@ -4,6 +4,10 @@ window.onload = function(){
 	var maxHeight = $(document).height(); 
 	$("#enchant-stage").css("min-height", maxHeight);
 
+	var requestedDirection = -1;
+	var requestedXMovement = 0;
+	var requestedYMovement = 0;
+
 	var gameWidth = 480;
 	var gameHeight = 496;
 	var game = new Game(gameWidth, gameHeight);
@@ -39,48 +43,96 @@ window.onload = function(){
 	player.move = function(){
 		this.frame = this.spriteOffset + this.direction * 3 + this.walk;
 
+		if (game.input.up) {
+			requestedDirection = 0;
+			requestedYMovement = -4;
+			requestedXMovement = 0;
+
+		} else if (game.input.right) {
+			requestedDirection = 1;
+			requestedXMovement = 4;
+			requestedYMovement = 0;
+
+		} else if (game.input.left) {
+			requestedDirection = 2;
+			requestedXMovement = -4;
+			requestedYMovement = 0;
+
+		} else if (game.input.down) {
+			requestedDirection = 3;
+			requestedYMovement = 4;
+			requestedXMovement = 0;
+		}
+
 		if (this.isMoving) {
-		  this.moveBy(this.xMovement, this.yMovement);
-		  if (!(game.frame % 3)) {
-		    this.walk++;
-		    this.walk %= 3;
-		  }
-		  if ((this.xMovement && this.x % 16 === 0) || (this.yMovement && this.y % 16 === 0)) {
-			  if (this.xMovement || this.yMovement) {
-			    var x = this.x + (this.xMovement ? this.xMovement / Math.abs(this.xMovement) * 16 : 0);
-			    var y = this.y + (this.yMovement ? this.yMovement / Math.abs(this.yMovement) * 16 : 0);
-			  if (0 <= x && x < map.width && 0 <= y && y < map.height && map.hitTest(x, y)) {
-			    this.isMoving = false;
-			  	}
-			  }
-		    this.walk = 1;
-		
-		  }
-		  
+			this.moveBy(this.xMovement, this.yMovement);
+
+			if (!(game.frame % 3)) {
+				this.walk++;
+				this.walk %= 3;
+			}
+
+			if (this.x<=0 && this.y==(14*game.spriteHeight)) {
+				this.x = gameWidth - game.spriteWidth;				
+
+			} else if (this.x>=(gameWidth-game.spriteWidth) && this.y==(14*game.spriteHeight)) {
+				this.x = this.xMovement;
+
+			} else {
+				if ((this.direction==0 && requestedDirection==3) || (this.direction==3 && requestedDirection==0) || 
+					(this.direction==1 && requestedDirection==2) || (this.direction==2 && requestedDirection==1)) {
+					this.xMovement = requestedXMovement;
+					this.yMovement = requestedYMovement;
+					this.direction = requestedDirection;
+					requestedXMovement = 0;
+					requestedYMovement = 0;
+					requestedDirection = -1;						
+
+				} else {
+					if ((this.xMovement && this.x % 16 === 0) || (this.yMovement && this.y % 16 === 0)) {
+						if (this.direction!=requestedDirection && requestedDirection>-1) {
+							var x = this.x + (requestedXMovement ? requestedXMovement / Math.abs(requestedXMovement) * 16 : 0);
+							var y = this.y + (requestedYMovement ? requestedYMovement / Math.abs(requestedYMovement) * 16 : 0);
+
+							if (0 <= x && x < map.width && 0 <= y && y < map.height && !map.hitTest(x, y)) {
+								this.xMovement = requestedXMovement;
+								this.yMovement = requestedYMovement;
+								this.direction = requestedDirection;
+								requestedXMovement = 0;
+								requestedYMovement = 0;
+								requestedDirection = -1;						
+							}
+						}
+
+						var x = this.x + (this.xMovement ? this.xMovement / Math.abs(this.xMovement) * 16 : 0);
+						var y = this.y + (this.yMovement ? this.yMovement / Math.abs(this.yMovement) * 16 : 0);
+
+						if (0 <= x && x < map.width && 0 <= y && y < map.height && map.hitTest(x, y)) {
+							this.xMovement = 0;
+							this.yMovement = 0;
+							this.isMoving = false;
+						}	
+					}
+				}		  
+			}
+
 		} else {
-		  this.xMovement = 0;
-		  this.yMovement = 0;
-		  if (game.input.up) {
-		    this.direction = 0;
-		    this.yMovement = -4;
-		  } else if (game.input.right) {
-		    this.direction = 1;
-		    this.xMovement = 4;
-		  } else if (game.input.left) {
-		    this.direction = 2;
-		    this.xMovement = -4;
-		  } else if (game.input.down) {
-		    this.direction = 3;
-		    this.yMovement = 4;
-		  }
-		  if (this.xMovement || this.yMovement) {
-		    var x = this.x + (this.xMovement ? this.xMovement / Math.abs(this.xMovement) * 16 : 0);
-		    var y = this.y + (this.yMovement ? this.yMovement / Math.abs(this.yMovement) * 16 : 0);
-		  if (0 <= x && x < map.width && 0 <= y && y < map.height && !map.hitTest(x, y)) {
-		      this.isMoving = true;
-		      this.move();
-		  	}
-		  }
+			if (requestedXMovement || requestedYMovement) {
+				var x = this.x + (requestedXMovement ? requestedXMovement / Math.abs(requestedXMovement) * 16 : 0);
+				var y = this.y + (requestedYMovement ? requestedYMovement / Math.abs(requestedYMovement) * 16 : 0);
+
+				if (0 <= x && x < map.width && 0 <= y && y < map.height && !map.hitTest(x, y)) {
+					this.xMovement = requestedXMovement;
+					this.yMovement = requestedYMovement;
+					this.direction = requestedDirection;
+					requestedXMovement = 0;
+					requestedYMovement = 0;
+					requestedDirection = -1;
+					
+					this.isMoving = true;
+					this.move();
+				}
+			}
 		}
 	};
 
