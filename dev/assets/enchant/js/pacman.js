@@ -1,9 +1,33 @@
 enchant();
 
+Map.prototype.setTile = function(x, y, tileValue) {
+	if (x < 0 || this.width <= x || y < 0 || this.height <= y) {
+		return false;
+	}
+
+	var width = this._image.width;
+	var height = this._image.height;
+	var tileWidth = this._tileWidth || width;
+	var tileHeight = this._tileHeight || height;
+	x = x / tileWidth | 0;
+	y = y / tileHeight | 0;
+
+	var data = this._data[0];
+	var oldData = data[y][x];
+
+	data[y][x]=tileValue;
+
+	this._dirty = true;
+
+	return oldData;
+};
+
 window.onload = function(){
 	var maxHeight = $(document).height(); 
 	$("#enchant-stage").css("min-height", maxHeight);
 
+	var pillsandpowerupsCollected = 0;
+	var powerUpsCollected = 0;
 	var requestedDirection = -1;
 	var requestedXMovement = 0;
 	var requestedYMovement = 0;
@@ -19,16 +43,12 @@ window.onload = function(){
   	game.preload('assets/enchant/images/pacmanSprites.gif');
 
 	var map = new Map(game.spriteWidth, game.spriteHeight);
-	var foregroundMap = new Map(game.spriteWidth, game.spriteHeight);
+	var pillsandpowerups = new Map(game.spriteWidth, game.spriteHeight);
 	var player = new Sprite(game.spriteWidth, game.spriteHeight);
 
 	var setMaps = function(){
 		map.image = game.assets['assets/enchant/images/pacmanSprites.gif'];
 		map.loadData(mapData);
-
-		foregroundMap.image = game.assets['assets/enchant/images/pacmanSprites.gif'];
-		foregroundMap.loadData(foregroundData);
-
 	    var collisionData = [];
 	    for(var i = 0; i< mapData.length; i++){
 	      collisionData.push([]);
@@ -38,6 +58,18 @@ window.onload = function(){
 	      }
 	    }
 	    map.collisionData = collisionData;
+
+		pillsandpowerups.image = game.assets['assets/enchant/images/pacmanSprites.gif'];
+		pillsandpowerups.loadData(pillsandpowerupsData);
+	 	var pillsandpowerupsCollisionData = [];
+	    for(var i = 0; i< pillsandpowerupsData.length; i++){
+	      pillsandpowerupsCollisionData.push([]);
+	      for(var j = 0; j< pillsandpowerupsData[0].length; j++){
+	        var collision = pillsandpowerupsData[i][j] >= 0 ? 1 : 0;
+	        pillsandpowerupsCollisionData[i][j] = collision;
+	      }
+	    }
+	    pillsandpowerups.collisionData = pillsandpowerupsCollisionData;
 	};
 
 	player.move = function(){
@@ -90,6 +122,20 @@ window.onload = function(){
 
 				} else {
 					if ((this.xMovement && this.x % 16 === 0) || (this.yMovement && this.y % 16 === 0)) {
+						var checkTile = pillsandpowerups.checkTile(this.x, this.y);
+						if (checkTile>=0) {
+							pillsandpowerups.setTile(this.x, this.y, -1);
+
+							if (checkTile==151) {
+								pillsandpowerupsCollected++;
+								$("#score").html("Score " + pillsandpowerupsCollected);
+
+							} else {
+								powerUpsCollected++;
+								$("#powerUps").html("Power ups: " + powerUpsCollected);
+							}
+						}
+
 						if (this.direction!=requestedDirection && requestedDirection>-1) {
 							var x = this.x + (requestedXMovement ? requestedXMovement / Math.abs(requestedXMovement) * 16 : 0);
 							var y = this.y + (requestedYMovement ? requestedYMovement / Math.abs(requestedYMovement) * 16 : 0);
@@ -140,7 +186,7 @@ window.onload = function(){
 		var stage = new Group();
 		stage.addChild(map);
 	    stage.addChild(player);
-		stage.addChild(foregroundMap);
+		stage.addChild(pillsandpowerups);
 
 		game.rootScene.addChild(stage);
 	};

@@ -1,0 +1,990 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"poe",
+				"powerUpsCollected"
+			],
+			[
+				"swap",
+				"swapPoints"
+			],
+			[
+				"spri",
+				"spriteWidth"
+			],
+			[
+				"game",
+				"gameWidth"
+			],
+			[
+				"reque",
+				"requestedDirection"
+			],
+			[
+				"requeste",
+				"requestedDirection"
+			],
+			[
+				"req",
+				"requestedXMovement"
+			],
+			[
+				"y",
+				"yMovement"
+			],
+			[
+				"reques",
+				"requestedXMovement"
+			],
+			[
+				"xmo",
+				"xMovement"
+			],
+			[
+				"back",
+				"background-color"
+			],
+			[
+				"text",
+				"text-align"
+			],
+			[
+				"in",
+				"inline"
+			],
+			[
+				"te",
+				"text-transform"
+			],
+			[
+				"gamebo",
+				"gameBoardHeight"
+			],
+			[
+				"he",
+				"height"
+			],
+			[
+				"co",
+				"color"
+			],
+			[
+				"backgrou",
+				"background-color"
+			],
+			[
+				"rg",
+				"rgba()"
+			],
+			[
+				"foregrou",
+				"foregroundData"
+			],
+			[
+				"no",
+				"no-repeat"
+			],
+			[
+				"min",
+				"min-width"
+			],
+			[
+				"rgb",
+				"rgba()"
+			],
+			[
+				"r",
+				"rgba()"
+			],
+			[
+				"le",
+				"levelStats"
+			],
+			[
+				"push",
+				"pushScene"
+			],
+			[
+				"itemse",
+				"itemSelected"
+			],
+			[
+				"spriteshee",
+				"spriteSheetHeight"
+			],
+			[
+				"for",
+				"for	for (…) {…}"
+			],
+			[
+				"playerFAc",
+				"playerFacing"
+			],
+			[
+				"facing",
+				"facingSquare"
+			],
+			[
+				"facin",
+				"facingSquare"
+			],
+			[
+				"collis",
+				"collisionData"
+			],
+			[
+				"dis",
+				"distance"
+			],
+			[
+				"cast",
+				"castRays"
+			],
+			[
+				"dista",
+				"distanceY"
+			],
+			[
+				"dist",
+				"distanceY"
+			],
+			[
+				"distan",
+				"distanceX"
+			],
+			[
+				"ja",
+				"jaws"
+			],
+			[
+				"symb",
+				"symbolIndex"
+			],
+			[
+				"key",
+				"keyCode"
+			],
+			[
+				"PLAY",
+				"PLAYGROUND_WIDTH"
+			],
+			[
+				"play",
+				"PLAYGROUND_HEIGHT"
+			],
+			[
+				"PLAYGROUND_",
+				"PLAYGROUND_HEIGHT"
+			],
+			[
+				"PLAYER",
+				"playerWidth"
+			],
+			[
+				"pla",
+				"playerWidth"
+			],
+			[
+				"PLAYR",
+				"PLAYGROUND_HEIGHT"
+			],
+			[
+				"bac",
+				"background4"
+			],
+			[
+				"pr",
+				"previous"
+			],
+			[
+				"proto",
+				"prototype"
+			],
+			[
+				"previo",
+				"previousForm"
+			],
+			[
+				"surface",
+				"surfaceCache"
+			],
+			[
+				"sprit",
+				"spriteSize"
+			],
+			[
+				"sprite",
+				"spriteSheetHeight"
+			],
+			[
+				"scre",
+				"screenHeight"
+			],
+			[
+				"square",
+				"squarePadding"
+			],
+			[
+				"to",
+				"totalMatchesPossibles"
+			],
+			[
+				"match",
+				"matchesFound"
+			],
+			[
+				"matches",
+				"matchesFound"
+			],
+			[
+				"hea",
+				"header	Tag"
+			],
+			[
+				"matchesF",
+				"matchesFoundText"
+			],
+			[
+				"squ",
+				"squareSide"
+			],
+			[
+				"matche",
+				"matchesFoundText"
+			],
+			[
+				"sq",
+				"squares"
+			],
+			[
+				"begin",
+				"beginFill"
+			],
+			[
+				"placemen",
+				"placementArray"
+			],
+			[
+				"place",
+				"placementArray"
+			],
+			[
+				"s",
+				"stage"
+			],
+			[
+				"draw",
+				"drawRect"
+			],
+			[
+				"fo",
+				"for	for (…) {…}"
+			],
+			[
+				"activ",
+				"activeMole"
+			],
+			[
+				"hole",
+				"holeLocation"
+			],
+			[
+				"eye",
+				"eyeSize"
+			],
+			[
+				"fill",
+				"fillStyle"
+			],
+			[
+				"call",
+				"callback"
+			],
+			[
+				"border",
+				"border-radius"
+			],
+			[
+				"getel",
+				"getElementById"
+			],
+			[
+				"step",
+				"stepsTaken"
+			],
+			[
+				"inve",
+				"inventoryBoxes"
+			],
+			[
+				"inv",
+				"inventoryBoxes"
+			],
+			[
+				"inven",
+				"inventoryBox"
+			],
+			[
+				"invento",
+				"inventoryBox"
+			],
+			[
+				"inventory",
+				"inventory-box"
+			],
+			[
+				"player",
+				"player_inventory"
+			],
+			[
+				"playerIn",
+				"playerInventory"
+			],
+			[
+				"sourcecon",
+				"sourceContext"
+			],
+			[
+				"itema",
+				"itemable"
+			],
+			[
+				"draggin",
+				"draggingObjectId"
+			],
+			[
+				"fun",
+				"function"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "dev/assets/enchant/js/pacman.js",
+			"settings":
+			{
+				"buffer_size": 6538,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "dev/assets/enchant/js/map.js",
+			"settings":
+			{
+				"buffer_size": 7673,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "dev/assets/bower/enchant.js-builds/lang/en/enchant.js",
+			"settings":
+			{
+				"buffer_size": 224751,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+			[
+				"",
+				"Indentation: Reindent Lines"
+			]
+		],
+		"width": 416.0
+	},
+	"console":
+	{
+		"height": 0.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/D/Desarrollos/pacmanjs/dev/assets/bower/enchant.js-builds/lang/en/enchant.js",
+		"/D/Desarrollos/pacmanjs/dev/assets/enchant/js/map.js",
+		"/D/Desarrollos/pacmanjs/dev/index.html",
+		"/C/Users/VISV/Desktop/games/9_rpg/after_recipe3/game.js",
+		"/D/Desarrollos/pacmanjs/dev/assets/enchant/js/pacman.js",
+		"/D/Desarrollos/pacmanjs/.git/info/exclude",
+		"/D/Desarrollos/pacmanjs/.gitignore",
+		"/D/Desarrollos/pacmanjs/README.md",
+		"/C/Program Files/nodejs/node_modules/npm/html/doc/cli/npm-install.html",
+		"/D/Desarrollos/pacmanjs/package.json",
+		"/D/Desarrollos/web/centrocreare.es/node_modules/gulp/package.json",
+		"/C/Program Files/Git/mingw64/share/doc/git-doc/git-rm.html",
+		"/C/Program Files/Git/mingw64/share/doc/git-doc/git-push.html",
+		"/C/Program Files/Git/mingw64/share/doc/git-doc/git-status.html",
+		"/C/Program Files/Git/mingw64/share/doc/git-doc/git-clone.html",
+		"/D/_actual/pacmanjs/bower.json",
+		"/C/Program Files/Git/mingw64/share/doc/git-doc/git-pull.html",
+		"/C/Program Files/Git/mingw64/share/doc/git-doc/index.html",
+		"/D/Desarrollos/web/centrocreare.es/public/index.html",
+		"/D/Desarrollos/web/victorsemperevidal.com2/dev/index.html",
+		"/D/Desarrollos/web/victorsemperevidal.com2/dev/assets/enchant/js/pacman.js",
+		"/C/Users/VISV/Desktop/games/9_rpg/after_recipe4/game.js",
+		"/D/Desarrollos/web/victorsemperevidal.com2/dev/assets/enchant/js/map.js",
+		"/D/Desarrollos/web/victorsemperevidal.com/dev/index.html",
+		"/D/Desarrollos/web/victorsemperevidal.com/dev/assets/enchant/js/pacman.js",
+		"/D/Desarrollos/web/victorsemperevidal.com/dev/assets/enchant/js/map.js",
+		"/D/Desarrollos/web/victorsemperevidal.com/dev/assets/enchant/css/pacman.css",
+		"/D/Desarrollos/web/victorsemperevidal.com/gulpfile.js",
+		"/D/Desarrollos/web/victorsemperevidal.com/deploy/index.html",
+		"/D/Desarrollos/web/victorsemperevidal.com/deploy/assets/css/victorsemperevidal.css",
+		"/D/Desarrollos/web/victorsemperevidal.com/deploy/assets/js/victorsemperevidal.js",
+		"/D/Desarrollos/web/centrocreare.es/public/assets/css/360.css",
+		"/D/Desarrollos/web/centrocreare.es/gulpfile.js",
+		"/C/Users/VISV/Desktop/games/9_rpg/after_recipe3/map.js",
+		"/C/Users/VISV/Desktop/games/9_rpg/after_recipe2/game.js",
+		"/D/Desarrollos/web/victorsemperevidal.com/dev/assets/bower/enchant/enchant.js",
+		"/C/Users/VISV/Desktop/games/9_rpg/after_recipe1/game.js",
+		"/D/Desarrollos/web/victorsemperevidal.com/docs/MasterMan/src/com/victorsemperevidal/masterman/screens/arena/screenResources/arena/ArenaModelHardCoded.java",
+		"/D/Desarrollos/web/centrocreare.es/public/assets/css/styles.css",
+		"/D/Desarrollos/web/centrocreare.es/public/terapiasGrupales.html",
+		"/D/Desarrollos/web/centrocreare.es/public/bower_components/jquery/dist/jquery.js",
+		"/D/Desarrollos/web/victorsemperevidal.com/docs/MasterMan/src/res/cfg/masterman.properties",
+		"/D/Desarrollos/web/victorsemperevidal.com/docs/MasterMan/src/com/victorsemperevidal/masterman/_base/MasterManView.java",
+		"/D/Desarrollos/web/victorsemperevidal.com/docs/MasterMan/src/com/victorsemperevidal/masterman/screens/arena/screenResources/arena/ArenaView.java",
+		"/D/Desarrollos/web/victorsemperevidal.com/docs/MasterMan/src/com/victorsemperevidal/masterman/screens/arena/screenResources/arena/ArenaModel.java",
+		"/D/Desarrollos/web/centrocreare.es/public/test.html",
+		"/D/Desarrollos/web/centrocreare.es/public/talleresFormativos.html",
+		"/D/Desarrollos/web/centrocreare.es/public/ror.xml",
+		"/D/Desarrollos/web/centrocreare.es/public/terapiasIndividuales.html",
+		"/D/Desarrollos/web/centrocreare.es/public/actividadesCreativasFamilia.html",
+		"/D/Desarrollos/web/centrocreare.es/public/actividadesMamasPapasBebes.html",
+		"/D/Desarrollos/web/centrocreare.es/public/empresas.html",
+		"/D/Desarrollos/web/centrocreare.es/public/google938dc6bc0152bc65.html",
+		"/D/Desarrollos/web/centrocreare.es/public/googlefc0a43f541fc15fa.html",
+		"/D/Desarrollos/web/centrocreare.es/public/nosotros.html",
+		"/D/Desarrollos/web/centrocreare.es/public/profesionales.html",
+		"/D/Desarrollos/web/centrocreare.es/public/psicopedagogia.html",
+		"/D/Desarrollos/web/centrocreare.es/public/psicoterapia.html",
+		"/D/Desarrollos/web/centrocreare.es/public/servicios.html",
+		"/D/Desarrollos/web/centrocreare.es/public/talleresActividadesPersonalizadas.html",
+		"/D/Desarrollos/web/centrocreare.es/public/talleresTerapeuticos.html",
+		"/D/Desarrollos/web/centrocreare.es/public/talleresVacacionesFestivos.html",
+		"/D/Desarrollos/web/centrocreare.es/public/sitemap.html",
+		"/D/Desarrollos/web/centrocreare.es/public/assets/css/240.css",
+		"/D/Desarrollos/web/centrocreare.es/public/assets/css/1200.css",
+		"/D/Desarrollos/web/centrocreare.es/build/index.html",
+		"/C/Users/VISV/Desktop/games/9_rpg/after_recipe2/game.css",
+		"/C/Users/VISV/Desktop/games/9_rpg/after_recipe2/map.js",
+		"/D/Desarrollos/web/victorsemperevidal.com/dev/assets/js/enchantPacman.js",
+		"/D/Desarrollos/web/victorsemperevidal.com/dev/assets/css/enchantPacman.css",
+		"/C/Users/VISV/Desktop/games/9_rpg/after_recipe1/index.html",
+		"/C/Users/VISV/Desktop/games/9_rpg/after_recipe1/game.css",
+		"/D/Desarrollos/web/victorsemperevidal.com/.bowerrc",
+		"/D/Desarrollos/web/centrocreare.es/.bowerrc",
+		"/D/Desarrollos/web/victorsemperevidal.com/bower.json",
+		"/D/Desarrollos/web/centrocreare.es/build/assets/fonts/fontawesome-webfont.woff",
+		"/D/Desarrollos/web/centrocreare.es/public/assets/font-awesome/css/font-awesome.css",
+		"/D/Desarrollos/web/centrocreare.es/build/actividadesCreativasFamilia.html",
+		"/D/Desarrollos/web/centrocreare.es/build/css/site.css",
+		"/D/Desarrollos/web/centrocreare.es/build/css/site-797052d585.css",
+		"/D/Desarrollos/web/centrocreare.es/build/js/site.js",
+		"/D/Desarrollos/web/centrocreare.es/template/site.css",
+		"/D/Desarrollos/web/centrocreare.es/template/site.js",
+		"/D/Desarrollos/web/centrocreare.es/deploy/layout.src.tpl",
+		"/D/Desarrollos/web/centrocreare.es/src/templates/layout.src.tpl",
+		"/D/Desarrollos/web/centrocreare.es/src/templates/layout.tpl",
+		"/D/Desarrollos/web/centrocreare.es/src/templates/gulpfile.js",
+		"/D/Desarrollos/web/centrocreare.es/bower.json",
+		"/D/Desarrollos/web/centrocreare.es/centrocreare.sublime-workspace",
+		"/D/Desarrollos/web/centrocreare.es/public/bower_components/bootstrap/README.md",
+		"/D/Desarrollos/web/centrocreare.es/.bowerr",
+		"/C/Users/VISV/Desktop/tryToMix.html",
+		"/D/Desarrollos/web/centrocreare.es/video.html",
+		"/C/Users/VISV/Desktop/mixed.html",
+		"/D/Desarrollos/web/centrocreare.es.old/index.html",
+		"/D/Desarrollos/web/centrocreare.es/index.html",
+		"/C/Users/VISV/Desktop/EuroLibra",
+		"/C/Users/VISV/Desktop/index.html",
+		"/D/Desarrollos/web/centrocreare.es/talleresFormativos.html",
+		"/D/Desarrollos/web/centrocreare.es/assets/css/styles.css",
+		"/D/Desarrollos/web/centrocreare.es/actividadesCreativasFamilia.html",
+		"/D/Desarrollos/web/centrocreare.es/actividadesMamasPapasBebes.html",
+		"/D/Desarrollos/web/centrocreare.es/empresas.html",
+		"/D/Desarrollos/web/centrocreare.es/psicopedagogia.html",
+		"/D/Desarrollos/web/centrocreare.es/nosotros.html",
+		"/D/Desarrollos/web/centrocreare.es/psicoterapia.html",
+		"/D/Desarrollos/web/centrocreare.es/talleresActividadesPersonalizadas.html",
+		"/D/Desarrollos/web/centrocreare.es/talleresTerapeuticos.html",
+		"/D/Desarrollos/web/centrocreare.es/talleresVacacionesFestivos.html",
+		"/D/Desarrollos/web/centrocreare.es/terapiasGrupales.html",
+		"/D/Desarrollos/web/centrocreare.es/terapiasIndividuales.html",
+		"/D/Desarrollos/web/centrocreare.es/urllist.txt",
+		"/D/Desarrollos/web/centrocreare.es/assets/css/360.css",
+		"/D/Desarrollos/web/centrocreare.es/assets/css/240.css",
+		"/C/Users/VISV/Desktop/exchange rate.txt",
+		"/D/Desarrollos/web/centrocreare.es/sitemap.html",
+		"/D/Desarrollos/web/centrocreare.es/ror.xml",
+		"/D/Desarrollos/web/centrocreare.es/sitemap.xml",
+		"/D/Desarrollos/web/centrocreare.es_trabajando/indexTrabajando.html",
+		"/D/Desarrollos/web/centrocreare.es/indexTrabajando.html",
+		"/D/Desarrollos/web/centrocreare.es.activa/centrocreare.es/servicios.html",
+		"/D/Desarrollos/web/centrocreare.es.activa/centrocreare.es/colonias_creativas.html",
+		"/D/Desarrollos/web/centrocreare.es/assets/css/1200.css",
+		"/D/Desarrollos/web/centrocreare.es/about.html",
+		"/D/Desarrollos/web/centrocreare.es/google938dc6bc0152bc65.html",
+		"/D/Desarrollos/web/centrocreare.es/README.md",
+		"/D/Desarrollos/web/centrocreare.es/font-awesome/css/font-awesome.css",
+		"/D/Desarrollos/web/centrocreare.es.activa/centrocreare.es/index.html"
+	],
+	"find":
+	{
+		"height": 59.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			"<open files>",
+			"<open files>,<open folders>",
+			"<open files>",
+			"D:\\Desarrollos\\web\\centrocreare.es",
+			"D:\\Desarrollos\\web\\nueva\\bootstrap",
+			"D:\\Desarrollos\\web\\nueva",
+			"*.css",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"powerup",
+			"scene",
+			"redraw",
+			"pillsandpowerups",
+			"added",
+			"pillsandpowerups",
+			".call",
+			"setTile",
+			"map",
+			"enchant",
+			"enchat",
+			"enchant",
+			"entity",
+			"game",
+			"pills",
+			"tile",
+			"load",
+			"_data",
+			"load",
+			"loadMap",
+			"powerUps",
+			": function",
+			"foregroundMap",
+			"46",
+			"150",
+			"151",
+			"46",
+			"151",
+			"46",
+			"player",
+			"direction",
+			"package.json",
+			"save",
+			"isMOving",
+			"56",
+			"[056",
+			",0",
+			",00",
+			",",
+			"move",
+			"enchant",
+			"font",
+			",",
+			"width",
+			"Core =",
+			"Game",
+			"parseInt",
+			"function parseInt",
+			"parseInt",
+			"enchant.Core",
+			"GAME",
+			" -1]",
+			"[ -1",
+			"057",
+			"107",
+			"108",
+			"009",
+			"011",
+			"007",
+			"003",
+			"004",
+			"002",
+			"001",
+			"000",
+			"-1",
+			"057",
+			"151",
+			"295",
+			"003,295,295,295,295,295,295,004",
+			"055",
+			"050",
+			"047",
+			"048",
+			"096",
+			"018",
+			",295,295]",
+			"018,018]",
+			"024",
+			"020",
+			"023,001",
+			"023,002",
+			"023,001",
+			"023,007",
+			"022",
+			"047",
+			"010",
+			"001,027",
+			"001,016",
+			"000,016",
+			"entity",
+			"background",
+			"044",
+			"028",
+			"026",
+			"030",
+			"021",
+			"044",
+			"],0",
+			"017",
+			"0583",
+			"[",
+			",",
+			"18",
+			"295",
+			",3,",
+			",4,",
+			", ",
+			",5,",
+			",7,",
+			",8,",
+			",9,",
+			",4,",
+			",2,",
+			",0,",
+			"150",
+			"151",
+			",3,",
+			",1,",
+			"152",
+			"tileEmpty",
+			");",
+			"		arena.add(",
+			"tilePill",
+			"tileEmpty",
+			");",
+			"		arena.add(",
+			"tilePill",
+			"tileEmpty"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": true,
+		"regex": false,
+		"replace_history":
+		[
+			"pillsAndPowerUps",
+			"pills",
+			"-1",
+			" -1",
+			"-1",
+			" -1",
+			"-1",
+			"46",
+			"[ 56",
+			", ",
+			",  ",
+			"056]",
+			"[056",
+			" -1",
+			"-1",
+			"057",
+			"151",
+			"003,057,057,057,057,057,057,004",
+			"057",
+			"055",
+			"050",
+			"047",
+			"048",
+			"096",
+			"]",
+			"018]",
+			"007",
+			"002",
+			"001,001",
+			"001,002",
+			"001,001",
+			"001,007",
+			"007",
+			"018",
+			"003",
+			"001,002",
+			"001,001",
+			"000,001",
+			"295",
+			"000",
+			"003",
+			"001",
+			"018",
+			"],",
+			"044",
+			"583",
+			"[0",
+			",0",
+			"44",
+			"583",
+			",03,",
+			",04,",
+			",",
+			",05,",
+			",07,",
+			",08,",
+			",09,",
+			",04,",
+			",02,",
+			",00,",
+			"295",
+			"18",
+			",03,",
+			",01,",
+			"17",
+			"152",
+			",",
+			"",
+			"151",
+			"152",
+			",",
+			"",
+			"151",
+			"152",
+			",",
+			"",
+			"151",
+			"152",
+			",",
+			"",
+			"151",
+			"150",
+			"152",
+			",",
+			"",
+			"151",
+			"152",
+			",",
+			"",
+			"151",
+			"152",
+			",",
+			"",
+			"151",
+			"152",
+			",",
+			"",
+			"151",
+			"152",
+			",",
+			"",
+			"151",
+			"152",
+			",",
+			"",
+			"151",
+			"152",
+			",",
+			"",
+			"151",
+			"152",
+			",",
+			"",
+			"151",
+			"152",
+			",",
+			"151",
+			"152",
+			"",
+			"151",
+			"152",
+			",",
+			"",
+			"151",
+			"152",
+			",",
+			"",
+			"152"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "dev/assets/enchant/js/pacman.js",
+					"settings":
+					{
+						"buffer_size": 6538,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3745,
+								3745
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2376.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "dev/assets/enchant/js/map.js",
+					"settings":
+					{
+						"buffer_size": 7673,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "dev/assets/bower/enchant.js-builds/lang/en/enchant.js",
+					"settings":
+					{
+						"buffer_size": 224751,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								116248,
+								116248
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 75971.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 44.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"replace":
+	{
+		"height": 90.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 337.0,
+	"status_bar_visible": true
+}
