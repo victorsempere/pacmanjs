@@ -4,6 +4,18 @@
 		"selected_items":
 		[
 			[
+				"re",
+				"requestedDirection"
+			],
+			[
+				"reque",
+				"requestedYMovement"
+			],
+			[
+				"reques",
+				"requestedXMovement"
+			],
+			[
 				"poe",
 				"powerUpsCollected"
 			],
@@ -20,10 +32,6 @@
 				"gameWidth"
 			],
 			[
-				"reque",
-				"requestedDirection"
-			],
-			[
 				"requeste",
 				"requestedDirection"
 			],
@@ -34,10 +42,6 @@
 			[
 				"y",
 				"yMovement"
-			],
-			[
-				"reques",
-				"requestedXMovement"
 			],
 			[
 				"xmo",
@@ -367,16 +371,8 @@
 			"file": "dev/assets/enchant/js/pacman.js",
 			"settings":
 			{
-				"buffer_size": 6538,
+				"buffer_size": 13004,
 				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "dev/assets/enchant/js/map.js",
-			"settings":
-			{
-				"buffer_size": 7673,
-				"line_ending": "Unix"
 			}
 		},
 		{
@@ -416,8 +412,9 @@
 	},
 	"file_history":
 	[
-		"/D/Desarrollos/pacmanjs/dev/assets/bower/enchant.js-builds/lang/en/enchant.js",
+		"/D/Desarrollos/pacmanjsOld/docs/MasterMan/src/com/victorsemperevidal/masterman/screens/arena/GameConfiguration.java",
 		"/D/Desarrollos/pacmanjs/dev/assets/enchant/js/map.js",
+		"/D/Desarrollos/pacmanjs/dev/assets/bower/enchant.js-builds/lang/en/enchant.js",
 		"/D/Desarrollos/pacmanjs/dev/index.html",
 		"/C/Users/VISV/Desktop/games/9_rpg/after_recipe3/game.js",
 		"/D/Desarrollos/pacmanjs/dev/assets/enchant/js/pacman.js",
@@ -542,8 +539,7 @@
 		"/D/Desarrollos/web/centrocreare.es/about.html",
 		"/D/Desarrollos/web/centrocreare.es/google938dc6bc0152bc65.html",
 		"/D/Desarrollos/web/centrocreare.es/README.md",
-		"/D/Desarrollos/web/centrocreare.es/font-awesome/css/font-awesome.css",
-		"/D/Desarrollos/web/centrocreare.es.activa/centrocreare.es/index.html"
+		"/D/Desarrollos/web/centrocreare.es/font-awesome/css/font-awesome.css"
 	],
 	"find":
 	{
@@ -569,6 +565,22 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"move(",
+			"enemy",
+			"moveEne",
+			"aStar",
+			"player",
+			"moveEne",
+			"moveEnemy",
+			"player",
+			"moveEnemy",
+			"aStarMovement",
+			"aStarMovement ",
+			"input",
+			"blue",
+			"morado",
+			"pinky",
+			"player",
 			"powerup",
 			"scene",
 			"redraw",
@@ -680,23 +692,7 @@
 			",7,",
 			",8,",
 			",9,",
-			",4,",
-			",2,",
-			",0,",
-			"150",
-			"151",
-			",3,",
-			",1,",
-			"152",
-			"tileEmpty",
-			");",
-			"		arena.add(",
-			"tilePill",
-			"tileEmpty",
-			");",
-			"		arena.add(",
-			"tilePill",
-			"tileEmpty"
+			",4,"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -704,6 +700,11 @@
 		"regex": false,
 		"replace_history":
 		[
+			"this",
+			"yellow",
+			"blue",
+			"morado",
+			"pinky",
 			"pillsAndPowerUps",
 			"pills",
 			"-1",
@@ -826,12 +827,7 @@
 			"151",
 			"152",
 			",",
-			"",
-			"151",
-			"152",
-			",",
-			"",
-			"152"
+			""
 		],
 		"reverse": false,
 		"show_context": true,
@@ -850,15 +846,15 @@
 					"file": "dev/assets/enchant/js/pacman.js",
 					"settings":
 					{
-						"buffer_size": 6538,
+						"buffer_size": 13004,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3745,
-								3745
+								1340,
+								1340
 							]
 						],
 						"settings":
@@ -867,39 +863,13 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2376.0,
+						"translation.y": 946.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "dev/assets/enchant/js/map.js",
-					"settings":
-					{
-						"buffer_size": 7673,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
 					"file": "dev/assets/bower/enchant.js-builds/lang/en/enchant.js",
 					"settings":
 					{
@@ -910,8 +880,8 @@
 						"selection":
 						[
 							[
-								116248,
-								116248
+								53679,
+								53684
 							]
 						],
 						"settings":
@@ -921,7 +891,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 75971.0,
+						"translation.y": 34308.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
