@@ -1,59 +1,88 @@
 enchant();
 
-Map.prototype.setTile = function(x, y, tileValue) {
-	if (x < 0 || this.width <= x || y < 0 || this.height <= y) {
-		return false;
-	}
-
-	var width = this._image.width;
-	var height = this._image.height;
-	var tileWidth = this._tileWidth || width;
-	var tileHeight = this._tileHeight || height;
-	x = x / tileWidth | 0;
-	y = y / tileHeight | 0;
-
-	var data = this._data[0];
-	var oldData = data[y][x];
-
-	data[y][x]=tileValue;
-
-	this._dirty = true;
-
-	return oldData;
-};
-
 window.onload = function(){
-function Enemy(width, height) {
-	Sprite.call(this, width, height);
-}
+	var sceneBoard;
+	var sceneGameOver;
 
-Enemy.prototype = Object.create(Sprite.prototype);
-Enemy.prototype.aStarMovement = function(player) {
-	this.requestedDirection = Math.floor(Math.random() * 3);
-	switch(this.requestedDirection) {
-		case 0:
-			this.requestedYMovement = -4;
-			this.requestedXMovement = 0;
-			break;
+	var pill = 161;
+	var pillPowerUp = 160;
+	var spriteGhostEaten = 144;
+	var spriteVulnerable = 96;
+	var powerUpTimeout = 5000;
+	var pillscollected = 0;
+	var ghostsEat = 0;
+	var powerUpsCollected = 0;
+	var gameOver = false;
+	var gameWidth = 480;
+	var gameHeight = 496;
+	var maxHeight = $(document).height(); 
+	$("#enchant-stage").css("min-height", maxHeight);
 
-		case 1:
-			this.requestedXMovement = 4;
-			this.requestedYMovement = 0;
-			break;
+	Map.prototype.setTile = function(x, y, tileValue) {
+		var width = this._image.width;
+		var height = this._image.height;
+		var tileWidth = this._tileWidth || width;
+		var tileHeight = this._tileHeight || height;
+		x = x / tileWidth | 0;
+		y = y / tileHeight | 0;
 
-		case 2:
-			this.requestedXMovement = -4;
-			this.requestedYMovement = 0;
-			break;
+		var data = this._data[0];
+		var oldData = data[y][x];
 
-		case 3:
-			this.requestedYMovement = 4;
-			this.requestedXMovement = 0;
-			break;
+		data[y][x]=tileValue;
+
+		this._dirty = true;
+
+		return oldData;
+	};
+
+	function Enemy(width, height) {
+		Sprite.call(this, width, height);
 	}
-};
 
-Enemy.prototype.move = function(player) {
+	Enemy.prototype = Object.create(Sprite.prototype);
+	Enemy.prototype.ghostEaten = function() {
+		this.spriteOffset = spriteGhostEaten;
+	}
+
+	Enemy.prototype.setVulnerable = function(isVulnerable) {
+		this.isVulnerable = isVulnerable;
+		
+		if (isVulnerable) {
+			this.spriteOffset = spriteVulnerable;
+
+		} else {
+			this.spriteOffset = this.originalSpriteOffset;
+		}
+	};
+
+	Enemy.prototype.aStarMovement = function(player) {
+		this.requestedDirection = Math.floor(Math.random() * 4);
+
+		switch(this.requestedDirection) {
+			case 0:
+				this.requestedYMovement = -4;
+				this.requestedXMovement = 0;
+				break;
+
+			case 1:
+				this.requestedXMovement = 4;
+				this.requestedYMovement = 0;
+				break;
+
+			case 2:
+				this.requestedXMovement = -4;
+				this.requestedYMovement = 0;
+				break;
+
+			case 3:
+				this.requestedYMovement = 4;
+				this.requestedXMovement = 0;
+				break;
+		}
+	};
+
+	Enemy.prototype.move = function(player, map, game) {
 		this.frame = this.spriteOffset + this.direction * 2 + this.walk;
 
 		if (this.isMoving) {
@@ -99,7 +128,7 @@ Enemy.prototype.move = function(player) {
 						var x = this.x + (this.xMovement ? this.xMovement / Math.abs(this.xMovement) * 16 : 0);
 						var y = this.y + (this.yMovement ? this.yMovement / Math.abs(this.yMovement) * 16 : 0);
 
-						if (0 <= x && x < map.width && 0 <= y && y < map.height && map.hitTest(x, y)) {
+						if (map.hitTest(x, y)) {
 							this.xMovement = 0;
 							this.yMovement = 0;
 							this.isMoving = false;
@@ -125,20 +154,12 @@ Enemy.prototype.move = function(player) {
 					this.requestedDirection = -1;
 					
 					this.isMoving = true;
-					this.move(player);
+					this.move(player, map, game);
 				}
 			}
 		}
 	};
 
-	var maxHeight = $(document).height(); 
-	$("#enchant-stage").css("min-height", maxHeight);
-
-	var pillsandpowerupsCollected = 0;
-	var powerUpsCollected = 0;
-
-	var gameWidth = 480;
-	var gameHeight = 496;
 	var game = new Game(gameWidth, gameHeight);
 	game.fps = 30;
 	game.spriteSheetWidth = 256;
@@ -146,38 +167,43 @@ Enemy.prototype.move = function(player) {
 	game.spriteWidth = 16;
 	game.spriteHeight = 16;
   	game.preload('assets/enchant/images/pacmanSprites.gif');
+	game.setPowerUp = function() {
+		if (this.powerUpTimer) {
+			window.clearTimeout(this.powerUpTimer);
+		}
+		pinky.setVulnerable(true);
+		morado.setVulnerable(true);
+		blue.setVulnerable(true);
+		yellow.setVulnerable(true);
+		this.powerUpTimer = window.setTimeout(game.setPowerUpOff, powerUpTimeout);
+	};
+	game.setPowerUpOff = function() {
+		this.powerUpTimer = null;
 
-	var map = new Map(game.spriteWidth, game.spriteHeight);
-	var pillsandpowerups = new Map(game.spriteWidth, game.spriteHeight);
-	
-	var player = new Sprite(game.spriteWidth, game.spriteHeight);
-	player.requestedDirection = -1;
-	player.requestedXMovement = 0;
-	player.requestedYMovement = 0;
+		pinky.setVulnerable(false);
+		morado.setVulnerable(false);
+		blue.setVulnerable(false);
+		yellow.setVulnerable(false);
+	}
 
 
-	var pinky = new Enemy(game.spriteWidth, game.spriteHeight);
-	pinky.requestedDirection = -1;
-	pinky.requestedXMovement = 0;
-	pinky.requestedYMovement = 0;
-
-	var morado = new Enemy(game.spriteWidth, game.spriteHeight);
-	morado.requestedDirection = -1;
-	morado.requestedXMovement = 0;
-	morado.requestedYMovement = 0;
-
-	var blue = new Enemy(game.spriteWidth, game.spriteHeight);
-	blue.requestedDirection = -1;
-	blue.requestedXMovement = 0;
-	blue.requestedYMovement = 0;
-
-	var yellow = new Enemy(game.spriteWidth, game.spriteHeight);
-	yellow.requestedDirection = -1;
-	yellow.requestedXMovement = 0;
-	yellow.requestedYMovement = 0;
+	var map;
+	var pillsandpowerups;
+	var player;
+	var pinky;
+	var morado;
+	var blue;
+	var yellow;
 
 	var setMaps = function(){
-		map.image = game.assets['assets/enchant/images/pacmanSprites.gif'];
+		if (!map) {
+			map = new Map(game.spriteWidth, game.spriteHeight);
+			map.image = game.assets['assets/enchant/images/pacmanSprites.gif'];
+			map.on(enchant.Event.TOUCH_START, function(enchantEvent) {
+				player.setRequestedDirectionFromTouch(enchantEvent.x, enchantEvent.y);
+			});
+		}
+
 		map.loadData(mapData);
 	    var collisionData = [];
 	    for(var i = 0; i< mapData.length; i++){
@@ -189,7 +215,10 @@ Enemy.prototype.move = function(player) {
 	    }
 	    map.collisionData = collisionData;
 
-		pillsandpowerups.image = game.assets['assets/enchant/images/pacmanSprites.gif'];
+	    if (!pillsandpowerups) {
+			pillsandpowerups = new Map(game.spriteWidth, game.spriteHeight);
+			pillsandpowerups.image = game.assets['assets/enchant/images/pacmanSprites.gif'];
+	    }
 		pillsandpowerups.loadData(pillsandpowerupsData);
 	 	var pillsandpowerupsCollisionData = [];
 	    for(var i = 0; i< pillsandpowerupsData.length; i++){
@@ -202,220 +231,399 @@ Enemy.prototype.move = function(player) {
 	    pillsandpowerups.collisionData = pillsandpowerupsCollisionData;
 	};
 
-	player.move = function(){
-		this.frame = this.spriteOffset + this.direction * 3 + this.walk;
-
-		if (game.input.up) {
-			this.requestedDirection = 0;
-			this.requestedYMovement = -4;
-			this.requestedXMovement = 0;
-
-		} else if (game.input.right) {
-			this.requestedDirection = 1;
-			this.requestedXMovement = 4;
-			this.requestedYMovement = 0;
-
-		} else if (game.input.left) {
-			this.requestedDirection = 2;
-			this.requestedXMovement = -4;
-			this.requestedYMovement = 0;
-
-		} else if (game.input.down) {
-			this.requestedDirection = 3;
-			this.requestedYMovement = 4;
-			this.requestedXMovement = 0;
-		}
-
-		if (this.isMoving) {
-			this.moveBy(this.xMovement, this.yMovement);
-
-			if (!(game.frame % 3)) {
-				this.walk++;
-				this.walk %= 3;
-			}
-
-			if (this.x<=0 && this.y==(14*game.spriteHeight)) {
-				this.x = gameWidth - game.spriteWidth;				
-
-			} else if (this.x>=(gameWidth-game.spriteWidth) && this.y==(14*game.spriteHeight)) {
-				this.x = this.xMovement;
-
-			} else {
-				if ((this.direction==0 && this.requestedDirection==3) || (this.direction==3 && this.requestedDirection==0) || 
-					(this.direction==1 && this.requestedDirection==2) || (this.direction==2 && this.requestedDirection==1)) {
-					this.xMovement = this.requestedXMovement;
-					this.yMovement = this.requestedYMovement;
-					this.direction = this.requestedDirection;
-					this.requestedXMovement = 0;
-					this.requestedYMovement = 0;
-					this.requestedDirection = -1;						
-
-				} else {
-					if ((this.xMovement && this.x % 16 === 0) || (this.yMovement && this.y % 16 === 0)) {
-						var checkTile = pillsandpowerups.checkTile(this.x, this.y);
-						if (checkTile>=0) {
-							pillsandpowerups.setTile(this.x, this.y, -1);
-
-							if (checkTile==151) {
-								pillsandpowerupsCollected++;
-								$("#score").html("Score " + pillsandpowerupsCollected);
-
-							} else {
-								powerUpsCollected++;
-								$("#powerUps").html("Power ups: " + powerUpsCollected);
-							}
-						}
-
-						if (this.direction!=this.requestedDirection && this.requestedDirection>-1) {
-							var x = this.x + (this.requestedXMovement ? this.requestedXMovement / Math.abs(this.requestedXMovement) * 16 : 0);
-							var y = this.y + (this.requestedYMovement ? this.requestedYMovement / Math.abs(this.requestedYMovement) * 16 : 0);
-
-							if (!map.hitTest(x, y)) {
-								this.xMovement = this.requestedXMovement;
-								this.yMovement = this.requestedYMovement;
-								this.direction = this.requestedDirection;
-								this.requestedXMovement = 0;
-								this.requestedYMovement = 0;
-								this.requestedDirection = -1;						
-							}
-						}
-
-						var x = this.x + (this.xMovement ? this.xMovement / Math.abs(this.xMovement) * 16 : 0);
-						var y = this.y + (this.yMovement ? this.yMovement / Math.abs(this.yMovement) * 16 : 0);
-
-						if (map.hitTest(x, y)) {
-							this.xMovement = 0;
-							this.yMovement = 0;
-							this.isMoving = false;
-						}	
-					}
-				}		  
-			}
-
-		} else {
-			if (this.requestedXMovement || this.requestedYMovement) {
-				var x = this.x + (this.requestedXMovement ? this.requestedXMovement / Math.abs(this.requestedXMovement) * 16 : 0);
-				var y = this.y + (this.requestedYMovement ? this.requestedYMovement / Math.abs(this.requestedYMovement) * 16 : 0);
-
-				if (!map.hitTest(x, y)) {
-					this.xMovement = this.requestedXMovement;
-					this.yMovement = this.requestedYMovement;
-					this.direction = this.requestedDirection;
-					this.requestedXMovement = 0;
-					this.requestedYMovement = 0;
-					this.requestedDirection = -1;
-					
-					this.isMoving = true;
-					this.move();
-				}
-			}
-		}
-	};
-
-	var setStage = function(){
-		var stage = new Group();
-		stage.addChild(map);
-		stage.addChild(pillsandpowerups);
-	    stage.addChild(player);
-	    stage.addChild(pinky);
-	    stage.addChild(morado);
-	    stage.addChild(blue);
-	    stage.addChild(yellow);
-
-		game.rootScene.addChild(stage);
-	};
 
 	var setPlayer = function(){
+		if (!player) {
+			player = new Sprite(game.spriteWidth, game.spriteHeight);
+			player.image = new Surface(game.spriteSheetWidth, game.spriteSheetHeight);
+			player.image.draw(game.assets['assets/enchant/images/pacmanSprites.gif']);
+			player.setRequestedDirectionFromTouch = function(x, y) {
+				var dx = Math.abs(this.x - x);
+				var dy = Math.abs(this.y - y);
+
+				if (dx>dy) {
+					if (this.x<x) {
+						this.requestedDirection = 1;
+						this.requestedXMovement = 4;
+						this.requestedYMovement = 0;
+
+					} else {
+						this.requestedDirection = 2;
+						this.requestedXMovement = -4;
+						this.requestedYMovement = 0;
+					}
+				
+				} else {
+					if (this.y<y) {
+						this.requestedDirection = 3;
+						this.requestedYMovement = 4;
+						this.requestedXMovement = 0;
+
+					} else {
+						this.requestedDirection = 0;
+						this.requestedYMovement = -4;
+						this.requestedXMovement = 0;
+					}
+				}
+			};
+
+			player.move = function(){
+				this.frame = this.spriteOffset + this.direction * 3 + this.walk;
+
+				if (game.input.up) {
+					this.requestedDirection = 0;
+					this.requestedYMovement = -4;
+					this.requestedXMovement = 0;
+
+				} else if (game.input.right) {
+					this.requestedDirection = 1;
+					this.requestedXMovement = 4;
+					this.requestedYMovement = 0;
+
+				} else if (game.input.left) {
+					this.requestedDirection = 2;
+					this.requestedXMovement = -4;
+					this.requestedYMovement = 0;
+
+				} else if (game.input.down) {
+					this.requestedDirection = 3;
+					this.requestedYMovement = 4;
+					this.requestedXMovement = 0;
+				}
+
+				if (this.isMoving) {
+					this.moveBy(this.xMovement, this.yMovement);
+
+					if (!(game.frame % 3)) {
+						this.walk++;
+						this.walk %= 3;
+					}
+
+					if (this.x<=0 && this.y==(14*game.spriteHeight)) {
+						this.x = gameWidth - game.spriteWidth;				
+
+					} else if (this.x>=(gameWidth-game.spriteWidth) && this.y==(14*game.spriteHeight)) {
+						this.x = this.xMovement;
+
+					} else {
+						if ((this.direction==0 && this.requestedDirection==3) || (this.direction==3 && this.requestedDirection==0) || 
+							(this.direction==1 && this.requestedDirection==2) || (this.direction==2 && this.requestedDirection==1)) {
+							this.xMovement = this.requestedXMovement;
+							this.yMovement = this.requestedYMovement;
+							this.direction = this.requestedDirection;
+							this.requestedXMovement = 0;
+							this.requestedYMovement = 0;
+							this.requestedDirection = -1;						
+
+						} else {
+							if ((this.xMovement && this.x % 16 === 0) || (this.yMovement && this.y % 16 === 0)) {
+								var checkTile = pillsandpowerups.checkTile(this.x, this.y);
+								if (checkTile>=0) {
+									pillsandpowerups.setTile(this.x, this.y, -1);
+
+									if (checkTile==pill) {
+										pillscollected++;
+										$("#score").html("Score " + pillscollected);
+
+									} else {
+										game.setPowerUp();
+										powerUpsCollected++;
+
+										$("#powerUps").html("Power ups: " + powerUpsCollected);
+									}
+								}
+
+								if (this.direction!=this.requestedDirection && this.requestedDirection>-1) {
+									var x = this.x + (this.requestedXMovement ? this.requestedXMovement / Math.abs(this.requestedXMovement) * 16 : 0);
+									var y = this.y + (this.requestedYMovement ? this.requestedYMovement / Math.abs(this.requestedYMovement) * 16 : 0);
+
+									if (!map.hitTest(x, y)) {
+										this.xMovement = this.requestedXMovement;
+										this.yMovement = this.requestedYMovement;
+										this.direction = this.requestedDirection;
+										this.requestedXMovement = 0;
+										this.requestedYMovement = 0;
+										this.requestedDirection = -1;						
+									}
+								}
+
+								var x = this.x + (this.xMovement ? this.xMovement / Math.abs(this.xMovement) * 16 : 0);
+								var y = this.y + (this.yMovement ? this.yMovement / Math.abs(this.yMovement) * 16 : 0);
+
+								if (map.hitTest(x, y)) {
+									this.xMovement = 0;
+									this.yMovement = 0;
+									this.isMoving = false;
+								}	
+							}
+						}		  
+					}
+
+				} else {
+					if (this.requestedXMovement || this.requestedYMovement) {
+						var x = this.x + (this.requestedXMovement ? this.requestedXMovement / Math.abs(this.requestedXMovement) * 16 : 0);
+						var y = this.y + (this.requestedYMovement ? this.requestedYMovement / Math.abs(this.requestedYMovement) * 16 : 0);
+
+						if (!map.hitTest(x, y)) {
+							this.xMovement = this.requestedXMovement;
+							this.yMovement = this.requestedYMovement;
+							this.direction = this.requestedDirection;
+							this.requestedXMovement = 0;
+							this.requestedYMovement = 0;
+							this.requestedDirection = -1;
+							
+							this.isMoving = true;
+							this.move();
+						}
+					}
+				}
+			};
+		}
+
+		player.isMoving = false;
+		player.requestedDirection = -1;
+		player.requestedXMovement = 0;
+		player.requestedYMovement = 0;
 		player.spriteOffset = 33;
 		player.startingX = 14;
 		player.startingY = 17;
 		player.x = player.startingX * game.spriteWidth;
 		player.y = player.startingY * game.spriteHeight;
+		player.xMovement = 0;
+		player.yMovement = 0;
 		player.direction = 0;
 		player.walk = 0;
 		player.frame = player.spriteOffset + player.direction; 
-		player.image = new Surface(game.spriteSheetWidth, game.spriteSheetHeight);
-		player.image.draw(game.assets['assets/enchant/images/pacmanSprites.gif']);
 	};
 
 	var setPinky = function() {
+		if (!pinky) {
+			pinky = new Enemy(game.spriteWidth, game.spriteHeight);
+			pinky.image = new Surface(game.spriteSheetWidth, game.spriteSheetHeight);
+			pinky.image.draw(game.assets['assets/enchant/images/pacmanSprites.gif']);
+		}
+
+		pinky.isMoving = false;
+		pinky.requestedDirection = -1;
+		pinky.requestedXMovement = 0;
+		pinky.requestedYMovement = 0;
 		pinky.spriteOffset = 64;
+		pinky.originalSpriteOffset = pinky.spriteOffset;
 		pinky.startingX = 2;
 		pinky.startingY = 20;
 		pinky.x = pinky.startingX * game.spriteWidth;
 		pinky.y = pinky.startingY * game.spriteHeight;
 		pinky.direction = 0;
+		pinky.xMovement = 0;
+		pinky.yMovement = 0;
 		pinky.walk = 0;
 		pinky.frame = pinky.spriteOffset + pinky.direction; 
-		pinky.image = new Surface(game.spriteSheetWidth, game.spriteSheetHeight);
-		pinky.image.draw(game.assets['assets/enchant/images/pacmanSprites.gif']);
 	}
 
 	var setMorado = function() {
+		if (!morado) {
+			morado = new Enemy(game.spriteWidth, game.spriteHeight);
+			morado.image = new Surface(game.spriteSheetWidth, game.spriteSheetHeight);
+			morado.image.draw(game.assets['assets/enchant/images/pacmanSprites.gif']);
+		}
+
+		morado.isMoving = false;
+		morado.requestedDirection = -1;
+		morado.requestedXMovement = 0;
+		morado.requestedYMovement = 0;
 		morado.spriteOffset = 80;
+		morado.originalSpriteOffset = morado.spriteOffset;
 		morado.startingX = 26;
 		morado.startingY = 20;
 		morado.x = morado.startingX * game.spriteWidth;
 		morado.y = morado.startingY * game.spriteHeight;
 		morado.direction = 0;
+		morado.xMovement = 0;
+		morado.yMovement = 0;
 		morado.walk = 0;
 		morado.frame = morado.spriteOffset + morado.direction; 
-		morado.image = new Surface(game.spriteSheetWidth, game.spriteSheetHeight);
-		morado.image.draw(game.assets['assets/enchant/images/pacmanSprites.gif']);
 	}
 
 	var setBlue = function() {
+		if (!blue) {
+			blue = new Enemy(game.spriteWidth, game.spriteHeight);
+			blue.image = new Surface(game.spriteSheetWidth, game.spriteSheetHeight);
+			blue.image.draw(game.assets['assets/enchant/images/pacmanSprites.gif']);
+		}
+
+		blue.isMoving = false;
+		blue.requestedDirection = -1;
+		blue.requestedXMovement = 0;
+		blue.requestedYMovement = 0;
 		blue.spriteOffset = 112;
+		blue.originalSpriteOffset = blue.spriteOffset;
 		blue.startingX = 26;
 		blue.startingY = 1;
 		blue.x = blue.startingX * game.spriteWidth;
 		blue.y = blue.startingY * game.spriteHeight;
 		blue.direction = 0;
+		blue.xMovement = 0;
+		blue.yMovement = 0;
 		blue.walk = 0;
 		blue.frame = blue.spriteOffset + blue.direction; 
-		blue.image = new Surface(game.spriteSheetWidth, game.spriteSheetHeight);
-		blue.image.draw(game.assets['assets/enchant/images/pacmanSprites.gif']);
 	}
 
 
 	var setYellow = function() {
+		if (!yellow) {
+			yellow = new Enemy(game.spriteWidth, game.spriteHeight);
+			yellow.image = new Surface(game.spriteSheetWidth, game.spriteSheetHeight);
+			yellow.image.draw(game.assets['assets/enchant/images/pacmanSprites.gif']);
+		}
+
+		yellow.isMoving = false;
+		yellow.requestedDirection = 0;
+		yellow.requestedXMovement = 0;
+		yellow.requestedYMovement = 0;
 		yellow.spriteOffset = 128;
+		yellow.originalSpriteOffset = yellow.spriteOffset;
 		yellow.startingX = 2;
 		yellow.startingY = 1;
 		yellow.x = yellow.startingX * game.spriteWidth;
 		yellow.y = yellow.startingY * game.spriteHeight;
+		yellow.xMovement = 0;
+		yellow.yMovement = 0;
 		yellow.direction = 0;
 		yellow.walk = 0;
 		yellow.frame = yellow.spriteOffset + yellow.direction; 
-		yellow.image = new Surface(game.spriteSheetWidth, game.spriteSheetHeight);
-		yellow.image.draw(game.assets['assets/enchant/images/pacmanSprites.gif']);
+	}
+
+
+	var setStage = function(){
+		if (sceneBoard==null) {
+			setMaps();
+			setPlayer();
+			setPinky();
+			setMorado();
+			setBlue();
+			setYellow();
+
+			var stage = new Group();
+			stage.addChild(map);
+			stage.addChild(pillsandpowerups);
+			stage.addChild(player);
+			stage.addChild(pinky);
+			stage.addChild(morado);
+			stage.addChild(blue);
+			stage.addChild(yellow);
+
+			sceneBoard = new Scene();
+			sceneBoard.addChild(stage);
+			sceneBoard.on(enchant.Event.EXIT, function() {
+				player.clearEventListener(enchant.Event.ENTER_FRAME);
+				yellow.clearEventListener(enchant.Event.ENTER_FRAME);
+				pinky.clearEventListener(enchant.Event.ENTER_FRAME);
+				morado.clearEventListener(enchant.Event.ENTER_FRAME);
+				blue.clearEventListener(enchant.Event.ENTER_FRAME);
+			});
+	
+			sceneBoard.on(enchant.Event.ENTER, function() {
+				$("#score").html("Score " + pillscollected);
+				$("#powerUps").html("Power ups: " + powerUpsCollected);
+				$("#gameOver").html("");
+
+				gameOver = false;
+				pillscollected = 0;
+				powerUpsCollected = 0;
+
+				setPlayer();
+				setPinky();
+				setMorado();
+				setBlue();
+				setYellow();
+
+				setMaps();
+
+				player.on(enchant.Event.ENTER_FRAME, function() {
+					player.move();
+				});
+
+				yellow.on(enchant.Event.ENTER_FRAME, function() {
+					yellow.move(player, map, game);
+					if (yellow.within(player, 8)) {
+						if (!yellow.isVulnerable) {
+							setGameOver();
+
+						} else {
+							yellow.ghostEaten();
+						}
+					}	
+				});
+
+				pinky.on(enchant.Event.ENTER_FRAME, function() {
+					pinky.move(player, map, game);
+					if (pinky.within(player, 8)) {
+						if (!pinky.isVulnerable) {
+							setGameOver();
+							
+						} else {
+							pinky.ghostEaten();
+						}
+					}
+				});
+
+				morado.on(enchant.Event.ENTER_FRAME, function() {
+					morado.move(player, map, game);
+					if (morado.within(player, 8)) {
+						if (!morado.isVulnerable) {
+							setGameOver();
+							
+						} else {
+							morado.ghostEaten();
+						}
+					}
+				});
+
+				blue.on(enchant.Event.ENTER_FRAME, function() {
+					blue.move(player, map, game);
+					if (blue.within(player, 8)) {
+						if (!blue.isVulnerable) {
+							setGameOver();
+							
+						} else {
+							blue.ghostEaten();
+						}
+					}
+				});
+		    });
+		}
+
+		game.replaceScene(sceneBoard);
+	};
+
+	var setGameOver = function() {
+		if (sceneGameOver==null) {
+			var gameOverLabel = new Label("Game Over");
+			gameOverLabel.font = "40px";
+			gameOverLabel.color = "#ffffff";
+			gameOverLabel.x = 10;
+			gameOverLabel.y = 10;
+
+			var stage = new Group();
+			stage.addChild(gameOverLabel);
+
+			sceneGameOver = new Scene();
+			sceneGameOver.addChild(stage);
+        	sceneGameOver.on('enter', function() {
+			sceneGameOver.on('enterframe', function() {
+					if (game.input) {
+	   		    		setStage();
+					}
+    			});
+	    	});
+		}
+
+		$("#gameOver").html("Game over");
+		game.replaceScene(sceneGameOver);
 	}
 
 	game.onload = function(){
-		setMaps();
-		setPlayer();
-		setPinky();
-		setMorado();
-		setBlue();
-		setYellow();
 		setStage();
-
-	    player.on('enterframe', function() {
-			player.move();
-    	});
-    	pinky.on('enterframe', function() {
-    		pinky.move(player);
-    	});
-    	morado.on('enterframe', function() {
-    		morado.move(player);
-    	});
-    	blue.on('enterframe', function() {
-    		blue.move(player);
-    	});
-    	yellow.on('enterframe', function() {
-    		yellow.move(player);
-    	});
-
 	};
 
 	game.start();

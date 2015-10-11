@@ -4,6 +4,26 @@
 		"selected_items":
 		[
 			[
+				"is",
+				"isVulnerable"
+			],
+			[
+				"powerup",
+				"powerUpTimer"
+			],
+			[
+				"SCENE",
+				"sceneBoard"
+			],
+			[
+				"scene",
+				"sceneGameOver"
+			],
+			[
+				"requ",
+				"requestedDirection"
+			],
+			[
 				"re",
 				"requestedDirection"
 			],
@@ -367,22 +387,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "dev/assets/enchant/js/pacman.js",
-			"settings":
-			{
-				"buffer_size": 13004,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "dev/assets/bower/enchant.js-builds/lang/en/enchant.js",
-			"settings":
-			{
-				"buffer_size": 224751,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -412,12 +416,15 @@
 	},
 	"file_history":
 	[
-		"/D/Desarrollos/pacmanjsOld/docs/MasterMan/src/com/victorsemperevidal/masterman/screens/arena/GameConfiguration.java",
-		"/D/Desarrollos/pacmanjs/dev/assets/enchant/js/map.js",
 		"/D/Desarrollos/pacmanjs/dev/assets/bower/enchant.js-builds/lang/en/enchant.js",
-		"/D/Desarrollos/pacmanjs/dev/index.html",
-		"/C/Users/VISV/Desktop/games/9_rpg/after_recipe3/game.js",
 		"/D/Desarrollos/pacmanjs/dev/assets/enchant/js/pacman.js",
+		"/D/Desarrollos/pacmanjs/dev/index.html",
+		"/D/Desarrollos/pacmanjs/dev/assets/enchant/js/map.js",
+		"/D/Desarrollos/pacmanjs/dev/assets/enchant/css/pacman.css",
+		"/D/Desarrollos/pacmanjs/dev/assets/enchant/js/player.js",
+		"/D/Desarrollos/pacmanjs/dev/assets/enchant/js/enemy.js",
+		"/D/Desarrollos/pacmanjsOld/docs/MasterMan/src/com/victorsemperevidal/masterman/screens/arena/GameConfiguration.java",
+		"/C/Users/VISV/Desktop/games/9_rpg/after_recipe3/game.js",
 		"/D/Desarrollos/pacmanjs/.git/info/exclude",
 		"/D/Desarrollos/pacmanjs/.gitignore",
 		"/D/Desarrollos/pacmanjs/README.md",
@@ -536,10 +543,7 @@
 		"/D/Desarrollos/web/centrocreare.es.activa/centrocreare.es/servicios.html",
 		"/D/Desarrollos/web/centrocreare.es.activa/centrocreare.es/colonias_creativas.html",
 		"/D/Desarrollos/web/centrocreare.es/assets/css/1200.css",
-		"/D/Desarrollos/web/centrocreare.es/about.html",
-		"/D/Desarrollos/web/centrocreare.es/google938dc6bc0152bc65.html",
-		"/D/Desarrollos/web/centrocreare.es/README.md",
-		"/D/Desarrollos/web/centrocreare.es/font-awesome/css/font-awesome.css"
+		"/D/Desarrollos/web/centrocreare.es/about.html"
 	],
 	"find":
 	{
@@ -565,6 +569,41 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"Event",
+			"enchant.Event.TOUCH_START",
+			"touch",
+			"input",
+			"pillsandpowerupsCollected",
+			"151",
+			"150",
+			"160",
+			"151",
+			"ghostEaten",
+			"hosteaten",
+			"setPlayer",
+			"var game",
+			"game",
+			"player",
+			"powerUpscollected",
+			"intersect",
+			"$(\"#",
+			"setplayer",
+			".move",
+			"move",
+			"setMaps",
+			"setPlayer",
+			"event.",
+			"event",
+			"on:",
+			"setYellow",
+			"yellow",
+			"on:",
+			"input",
+			"intersect",
+			"Map",
+			"move(",
+			"move(º",
+			"gameWidth",
 			"move(",
 			"enemy",
 			"moveEne",
@@ -657,42 +696,7 @@
 			"096",
 			"018",
 			",295,295]",
-			"018,018]",
-			"024",
-			"020",
-			"023,001",
-			"023,002",
-			"023,001",
-			"023,007",
-			"022",
-			"047",
-			"010",
-			"001,027",
-			"001,016",
-			"000,016",
-			"entity",
-			"background",
-			"044",
-			"028",
-			"026",
-			"030",
-			"021",
-			"044",
-			"],0",
-			"017",
-			"0583",
-			"[",
-			",",
-			"18",
-			"295",
-			",3,",
-			",4,",
-			", ",
-			",5,",
-			",7,",
-			",8,",
-			",9,",
-			",4,"
+			"018,018]"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -700,6 +704,10 @@
 		"regex": false,
 		"replace_history":
 		[
+			"pillsCollected",
+			"160",
+			"161",
+			"160",
 			"this",
 			"yellow",
 			"blue",
@@ -823,10 +831,6 @@
 			",",
 			"151",
 			"152",
-			"",
-			"151",
-			"152",
-			",",
 			""
 		],
 		"reverse": false,
@@ -838,64 +842,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "dev/assets/enchant/js/pacman.js",
-					"settings":
-					{
-						"buffer_size": 13004,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1340,
-								1340
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 946.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "dev/assets/bower/enchant.js-builds/lang/en/enchant.js",
-					"settings":
-					{
-						"buffer_size": 224751,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								53679,
-								53684
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 34308.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],
