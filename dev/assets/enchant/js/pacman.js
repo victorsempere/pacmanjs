@@ -1,24 +1,44 @@
 enchant();
 
 window.onload = function(){
+	// Scenes
 	var sceneBoard;
 	var sceneGameOver;
 
-	var level = 1;
-	var score = 0;
-	var pointsPerPill = 10;
+	// Game elements
+	var map;
+	var pillsandpowerups;
+	var player;
+	var pinky;
+	var morado;
+	var blue;
+	var yellow;
+	var scoreLabel;
+	var levelLabel;
+
+	// Tiles
+	var lifeSpriteNumber = 37;
 	var pill = 161;
 	var pillPowerUp = 160;
 	var spriteGhostEaten = 96;
 	var spriteVulnerable = 144;
+
+	// Game constants
+	var maxLifes = 3;
+	var pointsPerPill = 10;
 	var powerUpTimeout = 5000;
 	var totalPills = 299;
+	var gameWidth = 480;
+	var gameHeight = 544;
+
+	// Game values
+	var lifes = maxLifes;
+	var level = 1;
+	var score = 0;
 	var pillscollected = 0;
 	var ghostsEat = 0;
 	var powerUpsCollected = 0;
 	var gameOver = false;
-	var gameWidth = 480;
-	var gameHeight = 544;
 
 	Map.prototype.setTile = function(x, y, tileValue) {
 		var width = this._image.width;
@@ -188,17 +208,18 @@ window.onload = function(){
 		yellow.setVulnerable(false);
 	}
 
+	var setLifes = function(context, image) {
+		var srcy = Math.floor(lifeSpriteNumber/game.spriteHeight) * game.spriteHeight;
+		var srcx = (lifeSpriteNumber-srcy)*game.spriteWidth;
+		var x = 13 * game.spriteWidth - 20;
+		var y = 32 * game.spriteHeight - 10;
 
-	var map;
-	var pillsandpowerups;
-	var player;
-	var pinky;
-	var morado;
-	var blue;
-	var yellow;
-	var scoreLabel;
-	var levelLabel;
+		var finalSize = game.spriteWidth*2;
+		for (var i=0; i<lifes; i++) {
+			 context.drawImage(image, srcx, srcy, game.spriteWidth, game.spriteHeight, x+ (i*finalSize), y, finalSize, finalSize);
+		}
 
+	}
 	var setMaps = function(){
 		if (!map) {
 			map = new Map(game.spriteWidth, game.spriteHeight);
@@ -237,6 +258,10 @@ window.onload = function(){
 	    }
 		pillsandpowerups.loadData(newPillsandpowerupsData);
 	    pillsandpowerups.collisionData = pillsandpowerupsCollisionData;
+
+	    map.on(Event.ENTER_FRAME, function(e) {
+	    	setLifes(e.target._context, e.target.image._element);
+	    })
 	};
 
 
@@ -245,6 +270,15 @@ window.onload = function(){
 			player = new Sprite(game.spriteWidth, game.spriteHeight);
 			player.image = new Surface(game.spriteSheetWidth, game.spriteSheetHeight);
 			player.image.draw(game.assets['assets/enchant/images/pacmanSprites.gif']);
+			player.loseLife = function() {
+				lifes--;
+				if (lifes>0) {
+					setGameOver();
+
+				} else {
+					setStage();
+				}
+			} 
 			player.setRequestedDirectionFromTouch = function(x, y) {
 				var dx = Math.abs(this.x - x);
 				var dy = Math.abs(this.y - y);
@@ -481,10 +515,10 @@ window.onload = function(){
 	var setScore = function() {
 		if (!scoreLabel) {
 			scoreLabel = new Label();
-			scoreLabel.font = "italic bold 40px sans-serif";
+			scoreLabel.font = "italic bold 30px sans-serif";
 			scoreLabel.color = '#ffffff';
 			scoreLabel.x = 0;
-			scoreLabel.y = 490;
+			scoreLabel.y = 500;
 			scoreLabel.textAlign = 'left';
 		}
 
@@ -494,10 +528,10 @@ window.onload = function(){
 	var setLevel = function() {
 		if (!levelLabel) {		
 			levelLabel = new Label();
-			levelLabel.font = "italic bold 40px sans-serif";
+			levelLabel.font = "italic bold 30px sans-serif";
 			levelLabel.color = "#ffffff";
-			levelLabel.x = 300;
-			levelLabel.y = 490;
+			levelLabel.x = 350;
+			levelLabel.y = 500;
 			levelLabel.textAlign = 'left';
 		}
 		levelLabel.text = "Level: " + level;
@@ -531,9 +565,21 @@ window.onload = function(){
 		var label = new Label(message);
 		label.font = "italic bold 40px sans-serif";
 		label.color = "#ffffff";
-		label.x = x;
-		label.y = y;
 		label.textAlign = 'left';
+
+		var metrics = label.getMetrics(message);
+		if (x) {
+			label.x = x;
+		} else {
+			label.x = (game.width/2) - (metrics.width/2);
+		}
+
+		if (y) {
+			label.y = y;
+		} else {
+			label.y = (game.height/2) - (metrics.height/2);
+		}
+
 		scene.on(Event.ENTER_FRAME, function() {
 			if (label.age>(0.5*game.fps) && (game.input.left || game.input.right || game.input.up || game.input.down)) {
 				scene.clearEventListener(Event.ENTER_FRAME);
@@ -598,7 +644,8 @@ window.onload = function(){
 				setBlue();
 				setYellow();
 
-				showMessageAndWaitForKey(this, 180, 210, "Ready!", function() {
+
+				showMessageAndWaitForKey(this, null, 210, "Ready!", function() {
 					player.on(enchant.Event.ENTER_FRAME, function() {
 						player.move();
 					});
@@ -607,7 +654,7 @@ window.onload = function(){
 						yellow.move(player, map, game);
 						if (yellow.within(player, 8)) {
 							if (!yellow.isVulnerable) {
-								setGameOver();
+								player.loseLife();
 
 							} else {
 								yellow.ghostEaten();
@@ -619,8 +666,8 @@ window.onload = function(){
 						pinky.move(player, map, game);
 						if (pinky.within(player, 8)) {
 							if (!pinky.isVulnerable) {
-								setGameOver();
-								
+								player.loseLife();
+
 							} else {
 								pinky.ghostEaten();
 							}
@@ -631,7 +678,7 @@ window.onload = function(){
 						morado.move(player, map, game);
 						if (morado.within(player, 8)) {
 							if (!morado.isVulnerable) {
-								setGameOver();
+								player.loseLife();
 								
 							} else {
 								morado.ghostEaten();
@@ -643,7 +690,7 @@ window.onload = function(){
 						blue.move(player, map, game);
 						if (blue.within(player, 8)) {
 							if (!blue.isVulnerable) {
-								setGameOver();
+								player.loseLife();
 								
 							} else {
 								blue.ghostEaten();
@@ -670,33 +717,44 @@ window.onload = function(){
 
 	var setGameOver = function() {
 		if (sceneGameOver==null) {
-			var gameOverLabel = new Label("Game Over");
-			gameOverLabel.font = "40px";
+			var gameOverLabel = new Label("Game Over!");
+			gameOverLabel.font = "italic bold 40px sans-serif";
 			gameOverLabel.color = "#ffffff";
-			gameOverLabel.x = 10;
-			gameOverLabel.y = 10;
+			gameOverLabel.y = 200;
+			gameOverLabel.x = 200;
+			var metrics = gameOverLabel.getMetrics(gameOverLabel.text);
+			gameOverLabel.x = (game.width/2) - (metrics.width / 2);
+			gameOverLabel.y = (game.height/2) - (metrics.height / 2);
 
 			var stage = new Group();
 			stage.addChild(gameOverLabel);
 
 			sceneGameOver = new Scene();
 			sceneGameOver.addChild(stage);
-        	sceneGameOver.on('enter', function() {
-			sceneGameOver.on('enterframe', function() {
-					if (game.input) {
-	   		    		setStage();
-					}
-    			});
-	    	});
 		}
 
-		$("#gameOver").html("Game over");
+		sceneGameOver.on(Event.ENTER_FRAME, function() {
+			if (game.input.left || game.input.right || game.input.down || game.input.up) {
+				sceneGameOver.clearEventListener(Event.ENTER_FRAME);
+
+				window.setTimeout(function() { setStartGame(); }, 1000);
+			}
+		});
+
 		game.replaceScene(sceneGameOver);
 	}
 
 	game.onload = function(){
-		setStage();
+		setStartGame();
 	};
+
+	var setStartGame = function() {
+		lifes = maxLifes;
+		level = 1;
+		score = 0;
+
+		setStage();
+	}
 
 	game.start();
 };
