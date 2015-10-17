@@ -4,19 +4,21 @@ window.onload = function(){
 	var sceneBoard;
 	var sceneGameOver;
 
+	var level = 1;
+	var score = 0;
+	var pointsPerPill = 10;
 	var pill = 161;
 	var pillPowerUp = 160;
-	var spriteGhostEaten = 144;
-	var spriteVulnerable = 96;
+	var spriteGhostEaten = 96;
+	var spriteVulnerable = 144;
 	var powerUpTimeout = 5000;
+	var totalPills = 299;
 	var pillscollected = 0;
 	var ghostsEat = 0;
 	var powerUpsCollected = 0;
 	var gameOver = false;
 	var gameWidth = 480;
-	var gameHeight = 496;
-	var maxHeight = $(document).height(); 
-	$("#enchant-stage").css("min-height", maxHeight);
+	var gameHeight = 544;
 
 	Map.prototype.setTile = function(x, y, tileValue) {
 		var width = this._image.width;
@@ -194,40 +196,46 @@ window.onload = function(){
 	var morado;
 	var blue;
 	var yellow;
+	var scoreLabel;
+	var levelLabel;
 
 	var setMaps = function(){
 		if (!map) {
 			map = new Map(game.spriteWidth, game.spriteHeight);
 			map.image = game.assets['assets/enchant/images/pacmanSprites.gif'];
-			map.on(enchant.Event.TOUCH_START, function(enchantEvent) {
-				player.setRequestedDirectionFromTouch(enchantEvent.x, enchantEvent.y);
-			});
 		}
 
-		map.loadData(mapData);
+		var newMapData = [];
 	    var collisionData = [];
 	    for(var i = 0; i< mapData.length; i++){
 	      collisionData.push([]);
+	      newMapData.push(mapData[i].slice());
+
 	      for(var j = 0; j< mapData[0].length; j++){
 	        var collision = mapData[i][j] >= 0 ? 1 : 0;
 	        collisionData[i][j] = collision;
 	      }
 	    }
+
+		map.loadData(newMapData);
 	    map.collisionData = collisionData;
 
 	    if (!pillsandpowerups) {
 			pillsandpowerups = new Map(game.spriteWidth, game.spriteHeight);
 			pillsandpowerups.image = game.assets['assets/enchant/images/pacmanSprites.gif'];
 	    }
-		pillsandpowerups.loadData(pillsandpowerupsData);
+		var newPillsandpowerupsData = [];
 	 	var pillsandpowerupsCollisionData = [];
 	    for(var i = 0; i< pillsandpowerupsData.length; i++){
 	      pillsandpowerupsCollisionData.push([]);
+	      newPillsandpowerupsData.push(pillsandpowerupsData[i].slice());
+
 	      for(var j = 0; j< pillsandpowerupsData[0].length; j++){
 	        var collision = pillsandpowerupsData[i][j] >= 0 ? 1 : 0;
 	        pillsandpowerupsCollisionData[i][j] = collision;
 	      }
 	    }
+		pillsandpowerups.loadData(newPillsandpowerupsData);
 	    pillsandpowerups.collisionData = pillsandpowerupsCollisionData;
 	};
 
@@ -321,15 +329,17 @@ window.onload = function(){
 								if (checkTile>=0) {
 									pillsandpowerups.setTile(this.x, this.y, -1);
 
-									if (checkTile==pill) {
-										pillscollected++;
-										$("#score").html("Score " + pillscollected);
+									setScore();
+									pillscollected++;
+									score += pointsPerPill;
 
-									} else {
+									if (checkTile!=pill) {
 										game.setPowerUp();
 										powerUpsCollected++;
+									}
 
-										$("#powerUps").html("Power ups: " + powerUpsCollected);
+									if (pillscollected>=totalPills) {
+										setNextLevel();
 									}
 								}
 
@@ -468,6 +478,30 @@ window.onload = function(){
 		blue.frame = blue.spriteOffset + blue.direction; 
 	}
 
+	var setScore = function() {
+		if (!scoreLabel) {
+			scoreLabel = new Label();
+			scoreLabel.font = "italic bold 40px sans-serif";
+			scoreLabel.color = '#ffffff';
+			scoreLabel.x = 0;
+			scoreLabel.y = 490;
+			scoreLabel.textAlign = 'left';
+		}
+
+		scoreLabel.text = "Score: " + score;
+	}
+
+	var setLevel = function() {
+		if (!levelLabel) {		
+			levelLabel = new Label();
+			levelLabel.font = "italic bold 40px sans-serif";
+			levelLabel.color = "#ffffff";
+			levelLabel.x = 300;
+			levelLabel.y = 490;
+			levelLabel.textAlign = 'left';
+		}
+		levelLabel.text = "Level: " + level;
+	}
 
 	var setYellow = function() {
 		if (!yellow) {
@@ -493,16 +527,44 @@ window.onload = function(){
 		yellow.frame = yellow.spriteOffset + yellow.direction; 
 	}
 
+	var showMessageAndWaitForKey = function(scene, x, y, message, callback) {
+		var label = new Label(message);
+		label.font = "italic bold 40px sans-serif";
+		label.color = "#ffffff";
+		label.x = x;
+		label.y = y;
+		label.textAlign = 'left';
+		scene.on(Event.ENTER_FRAME, function() {
+			if (label.age>(0.5*game.fps) && (game.input.left || game.input.right || game.input.up || game.input.down)) {
+				scene.clearEventListener(Event.ENTER_FRAME);
+
+				label.selectedAge = label.age;
+				label.on(Event.ENTER_FRAME, function() {
+					label.opacity=Math.sin(label.age*0.2);
+					if ((label.age - label.selectedAge)>(game.fps<<1)) {
+						label.clearEventListener(Event.ENTER_FRAME);
+						
+						scene.removeChild(label);
+						callback();
+					}
+				})
+			}
+		});
+
+		scene.addChild(label);
+	}
 
 	var setStage = function(){
-		if (sceneBoard==null) {
-			setMaps();
-			setPlayer();
-			setPinky();
-			setMorado();
-			setBlue();
-			setYellow();
+		setMaps();
+		setPlayer();
+		setPinky();
+		setMorado();
+		setBlue();
+		setYellow();
+		setScore();
+		setLevel();
 
+		if (sceneBoard==null) {
 			var stage = new Group();
 			stage.addChild(map);
 			stage.addChild(pillsandpowerups);
@@ -514,87 +576,97 @@ window.onload = function(){
 
 			sceneBoard = new Scene();
 			sceneBoard.addChild(stage);
+			sceneBoard.addChild(scoreLabel);
+			sceneBoard.addChild(levelLabel);
+
 			sceneBoard.on(enchant.Event.EXIT, function() {
 				player.clearEventListener(enchant.Event.ENTER_FRAME);
 				yellow.clearEventListener(enchant.Event.ENTER_FRAME);
 				pinky.clearEventListener(enchant.Event.ENTER_FRAME);
 				morado.clearEventListener(enchant.Event.ENTER_FRAME);
 				blue.clearEventListener(enchant.Event.ENTER_FRAME);
+				sceneBoard.clearEventListener(enchant.Event.TOUCH_END);
 			});
 	
 			sceneBoard.on(enchant.Event.ENTER, function() {
-				$("#score").html("Score " + pillscollected);
-				$("#powerUps").html("Power ups: " + powerUpsCollected);
-				$("#gameOver").html("");
-
-				gameOver = false;
-				pillscollected = 0;
-				powerUpsCollected = 0;
-
+				setMaps();
+				setScore();
+				setLevel();
 				setPlayer();
 				setPinky();
 				setMorado();
 				setBlue();
 				setYellow();
 
-				setMaps();
+				showMessageAndWaitForKey(this, 180, 210, "Ready!", function() {
+					player.on(enchant.Event.ENTER_FRAME, function() {
+						player.move();
+					});
 
-				player.on(enchant.Event.ENTER_FRAME, function() {
-					player.move();
-				});
+					yellow.on(enchant.Event.ENTER_FRAME, function() {
+						yellow.move(player, map, game);
+						if (yellow.within(player, 8)) {
+							if (!yellow.isVulnerable) {
+								setGameOver();
 
-				yellow.on(enchant.Event.ENTER_FRAME, function() {
-					yellow.move(player, map, game);
-					if (yellow.within(player, 8)) {
-						if (!yellow.isVulnerable) {
-							setGameOver();
+							} else {
+								yellow.ghostEaten();
+							}
+						}	
+					});
 
-						} else {
-							yellow.ghostEaten();
+					pinky.on(enchant.Event.ENTER_FRAME, function() {
+						pinky.move(player, map, game);
+						if (pinky.within(player, 8)) {
+							if (!pinky.isVulnerable) {
+								setGameOver();
+								
+							} else {
+								pinky.ghostEaten();
+							}
 						}
-					}	
-				});
+					});
 
-				pinky.on(enchant.Event.ENTER_FRAME, function() {
-					pinky.move(player, map, game);
-					if (pinky.within(player, 8)) {
-						if (!pinky.isVulnerable) {
-							setGameOver();
-							
-						} else {
-							pinky.ghostEaten();
+					morado.on(enchant.Event.ENTER_FRAME, function() {
+						morado.move(player, map, game);
+						if (morado.within(player, 8)) {
+							if (!morado.isVulnerable) {
+								setGameOver();
+								
+							} else {
+								morado.ghostEaten();
+							}
 						}
-					}
-				});
+					});
 
-				morado.on(enchant.Event.ENTER_FRAME, function() {
-					morado.move(player, map, game);
-					if (morado.within(player, 8)) {
-						if (!morado.isVulnerable) {
-							setGameOver();
-							
-						} else {
-							morado.ghostEaten();
+					blue.on(enchant.Event.ENTER_FRAME, function() {
+						blue.move(player, map, game);
+						if (blue.within(player, 8)) {
+							if (!blue.isVulnerable) {
+								setGameOver();
+								
+							} else {
+								blue.ghostEaten();
+							}
 						}
-					}
-				});
-
-				blue.on(enchant.Event.ENTER_FRAME, function() {
-					blue.move(player, map, game);
-					if (blue.within(player, 8)) {
-						if (!blue.isVulnerable) {
-							setGameOver();
-							
-						} else {
-							blue.ghostEaten();
-						}
-					}
+					});
 				});
 		    });
 		}
 
 		game.replaceScene(sceneBoard);
+
 	};
+
+	var setNextLevel = function() {
+		requestStartLevel = false;
+		level++;
+		pillscollected = 0;
+		ghostsEat = 0;
+		powerUpsCollected = 0;
+
+		setStage();
+	}
 
 	var setGameOver = function() {
 		if (sceneGameOver==null) {

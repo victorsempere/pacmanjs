@@ -30,6 +30,7 @@ a {
 
 #enchant-stage {
 	background-color: rgb(0, 0, 0);
+	height: 400px;
 }
 
 .game {
@@ -63,11 +64,11 @@ a {
 }
 
 #score {
-	float: left;
+
 }
 
 #powerUps {
-	float: right;
+
 }
 
 @media screen and (max-width: 240px) {
