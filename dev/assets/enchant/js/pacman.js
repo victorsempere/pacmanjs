@@ -32,6 +32,7 @@ window.onload = function(){
 	var gameHeight = 544;
 
 	// Game values
+	var startTime = 0;
 	var lifes = maxLifes;
 	var level = 1;
 	var score = 0;
@@ -211,7 +212,7 @@ window.onload = function(){
 	var setLifes = function(context, image) {
 		var srcy = Math.floor(lifeSpriteNumber/game.spriteHeight) * game.spriteHeight;
 		var srcx = (lifeSpriteNumber-srcy)*game.spriteWidth;
-		var x = 13 * game.spriteWidth - 20;
+		var x = 13 * game.spriteWidth ;
 		var y = 32 * game.spriteHeight - 10;
 
 		var finalSize = game.spriteWidth*2;
@@ -272,7 +273,7 @@ window.onload = function(){
 			player.image.draw(game.assets['assets/enchant/images/pacmanSprites.gif']);
 			player.loseLife = function() {
 				lifes--;
-				if (lifes>0) {
+				if (lifes<=0) {
 					setGameOver();
 
 				} else {
@@ -749,10 +750,11 @@ window.onload = function(){
 	};
 
 	var setStartGame = function() {
+ 		startTime = (new Date).getTime();
 		lifes = maxLifes;
 		level = 1;
 		score = 0;
-
+		
 		setStage();
 	}
 
