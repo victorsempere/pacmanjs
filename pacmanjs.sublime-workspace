@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"AStarSe",
+				"AStarSearch"
+			],
+			[
+				"power",
+				"pillPowerUp"
+			],
+			[
 				"EXIT",
 				"EXIT_FRAME"
 			],
@@ -14,10 +22,6 @@
 			[
 				"pil",
 				"pill"
-			],
-			[
-				"power",
-				"pillPowerUp"
 			],
 			[
 				"for",
@@ -451,7 +455,15 @@
 			"file": "dev/assets/enchant/js/pacman.js",
 			"settings":
 			{
-				"buffer_size": 21087,
+				"buffer_size": 23138,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "dev/assets/enchant/js/astar.js",
+			"settings":
+			{
+				"buffer_size": 3770,
 				"line_ending": "Windows"
 			}
 		}
@@ -484,8 +496,23 @@
 	},
 	"file_history":
 	[
+		"/D/Desarrollos/pacmanjs/dev/index.html",
 		"/D/Desarrollos/pacmanjs/dev/assets/bower/enchant.js-builds/lang/en/enchant.js",
+		"/D/Desarrollos/pacmanjs/dev/assets/enchant/js/astar_pacman.js",
+		"/D/Desarrollos/pacmanjsOld/docs/MasterMan/src/com/victorsemperevidal/masterman/screens/arena/screenResources/arena/ArenaModel.java",
+		"/D/Desarrollos/pacmanjsOld/docs/MasterMan/src/com/victorsemperevidal/masterman/screens/arena/screenResources/avatars/enemigos/EnemyModel.java",
+		"/D/Desarrollos/pacmanjsOld/docs/MasterMan/src/com/victorsemperevidal/masterman/screens/arena/screenResources/avatars/_base/AvatarModel.java",
+		"/D/Desarrollos/pacmanjs/dev/assets/enchant/js/astar.js",
+		"/D/Desarrollos/pacmanjsOld/docs/MasterMan/src/com/victorsemperevidal/masterman/screens/arena/screenResources/avatars/enemigos/amarillo/AmarilloModel.java",
+		"/D/Desarrollos/pacmanjsOld/docs/MasterMan/src/com/victorsemperevidal/masterman/screens/arena/screenResources/avatars/_base/AvatarStep.java",
+		"/D/Desarrollos/pacmanjs/dev/assets/enchant/js/pacman.js",
 		"/D/Desarrollos/pacmanjs/dev/assets/enchant/js/map.js",
+		"/C/Users/VISV/Desktop/isa/tryToMix.html",
+		"/D/Desarrollos/pacmanjsOld/docs/MasterMan/src/com/victorsemperevidal/masterman/screens/arena/screenResources/arena/ArenaNode.java",
+		"/D/Desarrollos/pacmanjsOld/docs/MasterMan/src/com/victorsemperevidal/masterman/screens/arena/screenResources/arena/ArenaModelType.java",
+		"/D/Desarrollos/pacmanjsOld/docs/MasterMan/src/com/victorsemperevidal/masterman/screens/arena/screenResources/arena/ArenaModelHardCoded.java",
+		"/D/Desarrollos/pacmanjsOld/docs/MasterMan/src/com/victorsemperevidal/masterman/screens/arena/ArenaScreenModel.java",
+		"/C/Program Files/sqldeveloper/sqldeveloper/bin/sqldeveloper.conf",
 		"/D/Desarrollos/web/centrocreare.es/public/index.html",
 		"/C/Program Files (x86)/GeoServer 2.8.0/data_dir/demo/WFS_getFeature-2.0.xml",
 		"/C/Program Files (x86)/GeoServer 2.8.0/data_dir/demo/WMS_getMap.xml",
@@ -494,14 +521,7 @@
 		"/D/Desarrollos/pacmanjs/bower.json",
 		"/D/Desarrollos/pacmanjs/.bowerrc",
 		"/D/Desarrollos/pacmanjs/dev/openlayers.html",
-		"/D/Desarrollos/pacmanjsOld/docs/MasterMan/src/com/victorsemperevidal/masterman/screens/arena/screenResources/arena/ArenaModel.java",
-		"/D/Desarrollos/pacmanjs/dev/assets/enchant/js/pacman.js",
-		"/D/Desarrollos/pacmanjs/dev/assets/enchant/js/astar_pacman.js",
-		"/D/Desarrollos/pacmanjs/dev/index.html",
-		"/D/Desarrollos/pacmanjs/dev/assets/enchant/js/astar.js",
 		"/D/Desarrollos/pacmanjsOld/docs/MasterMan/src/com/victorsemperevidal/gameengine2d/engine/utils/pathfinding/AStarNode.java",
-		"/D/Desarrollos/pacmanjsOld/docs/MasterMan/src/com/victorsemperevidal/masterman/screens/arena/screenResources/arena/ArenaNode.java",
-		"/D/Desarrollos/pacmanjsOld/docs/MasterMan/src/com/victorsemperevidal/masterman/screens/arena/ArenaScreenModel.java",
 		"/D/Desarrollos/pacmanjsOld/docs/MasterMan/src/com/victorsemperevidal/masterman/_base/MasterManModel.java",
 		"/D/Desarrollos/pacmanjsOld/docs/MasterMan/src/com/victorsemperevidal/gameengine2d/engine/game/GameIF.java",
 		"/D/Desarrollos/pacmanjsOld/docs/MasterMan/src/com/victorsemperevidal/gameengine2d/engine/utils/EngineProperties.java",
@@ -603,15 +623,7 @@
 		"/D/Desarrollos/web/centrocreare.es/public/terapiasIndividuales.html",
 		"/D/Desarrollos/web/centrocreare.es/public/actividadesCreativasFamilia.html",
 		"/D/Desarrollos/web/centrocreare.es/public/actividadesMamasPapasBebes.html",
-		"/D/Desarrollos/web/centrocreare.es/public/empresas.html",
-		"/D/Desarrollos/web/centrocreare.es/public/google938dc6bc0152bc65.html",
-		"/D/Desarrollos/web/centrocreare.es/public/googlefc0a43f541fc15fa.html",
-		"/D/Desarrollos/web/centrocreare.es/public/nosotros.html",
-		"/D/Desarrollos/web/centrocreare.es/public/profesionales.html",
-		"/D/Desarrollos/web/centrocreare.es/public/psicopedagogia.html",
-		"/D/Desarrollos/web/centrocreare.es/public/psicoterapia.html",
-		"/D/Desarrollos/web/centrocreare.es/public/servicios.html",
-		"/D/Desarrollos/web/centrocreare.es/public/talleresActividadesPersonalizadas.html"
+		"/D/Desarrollos/web/centrocreare.es/public/empresas.html"
 	],
 	"find":
 	{
@@ -619,9 +631,10 @@
 	},
 	"find_in_files":
 	{
-		"height": 102.0,
+		"height": 0.0,
 		"where_history":
 		[
+			"<open files>,D:\\Desarrollos\\pacmanjs\\dev\\assets\\enchant\\js",
 			"<open files>",
 			"<open files>,<open folders>",
 			"<open files>",
@@ -637,6 +650,62 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"visitableCells",
+			"\n        ",
+			"checkTileByColRow",
+			"findPath",
+			"astarno",
+			"aStarNodes",
+			"setAStarAlgorithm",
+			"map",
+			"goalCell",
+			"setLifes",
+			"setLifese",
+			"arena",
+			"_data",
+			"Map",
+			"_data",
+			"aStarNodes",
+			"_aStarNodes",
+			"aStarNodes",
+			"getCellFromPosition",
+			"aStarNodes",
+			"astarnodeºs",
+			"astarnodes",
+			"findpa",
+			"findPath",
+			"addStep",
+			"getAStarNode",
+			"aStarSearch",
+			"steps",
+			"AStarSearch",
+			"goalCell",
+			"isPathToBeSet",
+			"move",
+			"setsta",
+			"setStage",
+			"move",
+			".on",
+			"findPath",
+			"pinky",
+			"build",
+			"BUILD",
+			"visitableCells",
+			"pillsandpowerups",
+			" -1",
+			"setTile",
+			"type",
+			"putAStarNode",
+			"setTile",
+			"checkTil",
+			"checktile",
+			"buildBasicAStarNode",
+			"foreach",
+			"putAStarNode",
+			"setMaps",
+			"setSTage",
+			"build",
+			"\\",
 			"setlifes",
 			".on",
 			"map.on",
@@ -708,63 +777,7 @@
 			"pillsandpowerups",
 			"game",
 			"setlifes",
-			"body",
-			"setlifes",
-			"surface",
-			"isRightHole",
-			"reut",
-			"isLeft",
-			"showme",
-			"setnext",
-			"timeout",
-			"setnext",
-			"pillscollected",
-			"setmaps",
-			"setStage",
-			"totalPills",
-			"showMessageAndWaitForKey",
-			"keybind",
-			"remove",
-			"event.",
-			"event",
-			"input",
-			".on",
-			"sansa-serif",
-			"setmap",
-			"pointsperpill",
-			"gameBoard",
-			"stage",
-			"gameBoard",
-			"sceneboard",
-			"pillscollected",
-			"pillscollection",
-			"pillscollected",
-			"setlevel",
-			"powerUpTimeout",
-			"setscore",
-			"maps",
-			"setScore",
-			"#",
-			"score",
-			"gameboard",
-			"setStage",
-			"scoreLabel",
-			"set",
-			"label",
-			"spriteGhostEaten",
-			"ghostEaten",
-			"setPowerUp",
-			"setvulnerable",
-			"spriteVulnerable",
-			"USE_DEFAULT_EVENT_TAGS",
-			"gameBoard",
-			"tagName",
-			"sceneBoard",
-			"USE_DEFAULT_EVENT_TAGS",
-			"preventDefault",
-			"setStage",
-			"gameOver",
-			"setStaget"
+			"body"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -772,6 +785,14 @@
 		"regex": false,
 		"replace_history":
 		[
+			"goalNode",
+			"_aStarNodes",
+			"161",
+			"1613",
+			"161",
+			"1613",
+			"161",
+			"/",
 			"161",
 			"-2]",
 			"[ -2",
@@ -891,14 +912,6 @@
 			"152",
 			",",
 			"",
-			"151",
-			"152",
-			",",
-			"",
-			"151",
-			"152",
-			",",
-			"",
 			"151"
 		],
 		"reverse": false,
@@ -918,15 +931,15 @@
 					"file": "dev/assets/enchant/js/pacman.js",
 					"settings":
 					{
-						"buffer_size": 21087,
+						"buffer_size": 23138,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								18188,
-								18188
+								2200,
+								2200
 							]
 						],
 						"settings":
@@ -935,7 +948,34 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 13716.0,
+						"translation.y": 3124.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "dev/assets/enchant/js/astar.js",
+					"settings":
+					{
+						"buffer_size": 3770,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								566,
+								566
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JavaScript.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 888.0,
 						"zoom_level": 1.0
 					},
 					"type": "text"
@@ -998,7 +1038,7 @@
 	"show_minimap": true,
 	"show_open_files": true,
 	"show_tabs": true,
-	"side_bar_visible": true,
-	"side_bar_width": 337.0,
+	"side_bar_visible": false,
+	"side_bar_width": 323.0,
 	"status_bar_visible": true
 }

@@ -7,7 +7,6 @@ window.onload = function(){
 
 	// Game elements
 	var map;
-	var pillsandpowerups;
 	var player;
 	var pinky;
 	var morado;
@@ -18,6 +17,7 @@ window.onload = function(){
 
 	// Tiles
 	var lifeSpriteNumber = 37;
+	var floor = -2;
 	var pill = 161;
 	var pillPowerUp = 160;
 	var spriteGhostEaten = 96;
@@ -41,6 +41,97 @@ window.onload = function(){
 	var powerUpsCollected = 0;
 	var gameOver = false;
 
+	Map.prototype.checkTileByColRow = function(col, row) {
+        if (!this._data || !this._data[0] || row>=this._data[0].length || col>=this._data[0][0].length) {
+            return false;
+        }
+
+        var data = this._data[0];
+        return data[row][col];
+	};
+
+	Map.prototype.getCellFromPosition = function(x, y, tileValue) {
+		var width = this._image.width;
+		var height = this._image.height;
+		var tileWidth = this._tileWidth || width;
+		var tileHeight = this._tileHeight || height;
+		x = x / tileWidth | 0;
+		y = y / tileHeight | 0;
+
+		var cell = x + (y*this._data[0][0].length);
+		return cell;
+	}
+
+	Map.prototype.aStarNodes = {
+		_aStarSearch: new AStarSearch(),
+		_aStarNodes: [],
+
+		findPath: function(sourceNode, targetNode) {
+			return this._aStarSearch.findPath(sourceNode, targetNode);
+		},
+
+		get: function(cell) {
+			return this._aStarNodes[cell];
+		},
+
+		set: function(cell, aStarNode) {
+			this._aStarNodes[cell] = aStarNode;
+		},
+
+		loadNeighbours: function(numCols) {
+			var starNodes = this;
+
+			this._aStarNodes.forEach(function(aStarNode, node, source) {
+				var cell = aStarNode.cell.get();
+				
+				var neighbour = starNodes.get(cell-1);
+				if (!!neighbour) {
+					aStarNode.neighbours.add(neighbour);
+				}
+
+				neighbour = starNodes.get(cell+1);
+				if (!!neighbour) {
+					aStarNode.neighbours.add(neighbour);
+				}
+
+				neighbour = starNodes.get(cell-numCols);
+				if (!!neighbour) {
+					aStarNode.neighbours.add(neighbour);
+				}
+
+				neighbour = starNodes.get(cell+numCols);
+				if (!!neighbour) {
+					aStarNode.neighbours.add(neighbour);
+				}
+			});
+		}
+	}
+ 
+ 	Map.prototype.loadAStarNodes = function() {
+		// Build basic AStar nodes
+		var map = this;
+
+		map._data[0].forEach(function(row, i, source) {
+			row.forEach(function(col, j, source) {
+				var tile = map.checkTileByColRow(j, i);
+				if (map.isVisitable(tile)) {
+					var cell = (i * source.length) + j;
+
+					var aStarNode = new AStarNode();
+					aStarNode.cell.set(cell);
+
+					map.aStarNodes.set(cell, aStarNode);
+				}
+			});
+		});
+
+		map.aStarNodes.loadNeighbours(map._data[0][0].length);
+	}
+
+	Map.prototype.isVisitable = function(cellType) {
+		return this.visitableCells.indexOf(cellType)!==-1;
+	}
+
 	Map.prototype.setTile = function(x, y, tileValue) {
 		var width = this._image.width;
 		var height = this._image.height;
@@ -61,9 +152,16 @@ window.onload = function(){
 
 	function Enemy(width, height) {
 		Sprite.call(this, width, height);
+
+		this.goalNode = null;
 	}
 
 	Enemy.prototype = Object.create(Sprite.prototype);
+
+	Enemy.prototype.isPathToBeSet = function() {
+		return this.goalNode == null || map.getCellFromPosition(x, y)==this.goalNode.cell.get();
+	}
+
 	Enemy.prototype.ghostEaten = function() {
 		this.spriteOffset = spriteGhostEaten;
 	}
@@ -80,7 +178,19 @@ window.onload = function(){
 	};
 
 	Enemy.prototype.aStarMovement = function(player) {
-		this.requestedDirection = Math.floor(Math.random() * 4);
+		if (this.isPathToBeSet()) {
+			// Random direction 
+			// this.requestedDirection = Math.floor(Math.random() * 4);
+
+			// Target the player
+			var sourceCell = map.getCellFromPosition(this.x, this.y);
+			var targetCell = map.getCellFromPosition(player.x, player.y);
+			var sourceNode = map.aStarNodes.get(sourceCell);
+			var targetNode = map.aStarNodes.get(targetCell);
+
+			goalNode = map.aStarNodes.findPath(sourceNode, targetNode);
+			var a = 1;
+		}
 
 		switch(this.requestedDirection) {
 			case 0:
@@ -103,6 +213,7 @@ window.onload = function(){
 				this.requestedXMovement = 0;
 				break;
 		}
+
 	};
 
 	Enemy.prototype.move = function(player, map, game) {
@@ -225,6 +336,10 @@ window.onload = function(){
 		if (!map) {
 			map = new Map(game.spriteWidth, game.spriteHeight);
 			map.image = game.assets['assets/enchant/images/pacmanSprites.gif'];
+			map.visitableCells = [];
+			map.visitableCells.push(pill);
+			map.visitableCells.push(pillPowerUp);
+			map.visitableCells.push(floor);
 		}
 
 		var newMapData = [];
@@ -234,35 +349,18 @@ window.onload = function(){
 	      newMapData.push(mapData[i].slice());
 
 	      for(var j = 0; j< mapData[0].length; j++){
-	        var collision = mapData[i][j] >= 0 ? 1 : 0;
+	        var collision = (mapData[i][j] >= 0 &&  mapData[i][j]!=160 && mapData[i][j]!=161) ? 1 : 0;
 	        collisionData[i][j] = collision;
 	      }
 	    }
 
 		map.loadData(newMapData);
 	    map.collisionData = collisionData;
-
-	    if (!pillsandpowerups) {
-			pillsandpowerups = new Map(game.spriteWidth, game.spriteHeight);
-			pillsandpowerups.image = game.assets['assets/enchant/images/pacmanSprites.gif'];
-	    }
-		var newPillsandpowerupsData = [];
-	 	var pillsandpowerupsCollisionData = [];
-	    for(var i = 0; i< pillsandpowerupsData.length; i++){
-	      pillsandpowerupsCollisionData.push([]);
-	      newPillsandpowerupsData.push(pillsandpowerupsData[i].slice());
-
-	      for(var j = 0; j< pillsandpowerupsData[0].length; j++){
-	        var collision = pillsandpowerupsData[i][j] >= 0 ? 1 : 0;
-	        pillsandpowerupsCollisionData[i][j] = collision;
-	      }
-	    }
-		pillsandpowerups.loadData(newPillsandpowerupsData);
-	    pillsandpowerups.collisionData = pillsandpowerupsCollisionData;
+		map.loadAStarNodes();
 
 	    map.on(Event.ENTER_FRAME, function(e) {
 	    	setLifes(e.target._context, e.target.image._element);
-	    })
+	    });
 	};
 
 
@@ -360,9 +458,9 @@ window.onload = function(){
 
 						} else {
 							if ((this.xMovement && this.x % 16 === 0) || (this.yMovement && this.y % 16 === 0)) {
-								var checkTile = pillsandpowerups.checkTile(this.x, this.y);
-								if (checkTile>=0) {
-									pillsandpowerups.setTile(this.x, this.y, -1);
+								var checkTile = map.checkTile(this.x, this.y);
+								if (checkTile==pill || checkTile==pillPowerUp) {
+									map.setTile(this.x, this.y, floor);
 
 									setScore();
 									pillscollected++;
@@ -602,30 +700,9 @@ window.onload = function(){
 	}
 
 	var setStage = function(){
-		setMaps();
-		setPlayer();
-		setPinky();
-		setMorado();
-		setBlue();
-		setYellow();
-		setScore();
-		setLevel();
-
 		if (sceneBoard==null) {
-			var stage = new Group();
-			stage.addChild(map);
-			stage.addChild(pillsandpowerups);
-			stage.addChild(player);
-			stage.addChild(pinky);
-			stage.addChild(morado);
-			stage.addChild(blue);
-			stage.addChild(yellow);
-
 			sceneBoard = new Scene();
-			sceneBoard.addChild(stage);
-			sceneBoard.addChild(scoreLabel);
-			sceneBoard.addChild(levelLabel);
-
+			
 			sceneBoard.on(enchant.Event.EXIT, function() {
 				player.clearEventListener(enchant.Event.ENTER_FRAME);
 				yellow.clearEventListener(enchant.Event.ENTER_FRAME);
@@ -645,6 +722,18 @@ window.onload = function(){
 				setBlue();
 				setYellow();
 
+
+				var stage = new Group();
+				stage.addChild(map);
+				stage.addChild(player);
+				stage.addChild(pinky);
+				stage.addChild(morado);
+				stage.addChild(blue);
+				stage.addChild(yellow);
+
+				this.addChild(stage);
+				this.addChild(scoreLabel);
+				this.addChild(levelLabel);
 
 				showMessageAndWaitForKey(this, null, 210, "Ready!", function() {
 					player.on(enchant.Event.ENTER_FRAME, function() {

@@ -2,6 +2,16 @@
 // A-Star Node
 //
 function AStarNode() {
+	this.cell = {
+		set: function(cell) {
+			this._cell = cell;
+		},
+
+		get: function() {
+			return this._cell;
+		}
+	};
+
 	this.pathParent = {
 		get: function() {
 			return this._pathParent;
@@ -10,7 +20,7 @@ function AStarNode() {
 		set: function(pathParent) {
 			this._pathParent = pathParent;
 		}
-	}
+	};
 
 	this.neighbours = {
 		get: function() {
@@ -22,9 +32,13 @@ function AStarNode() {
 		},
 
 		add: function(neighbour) {
-			this.neighbour.push(neighbour);
+			if (!!this._neighbours) {
+				this._neighbours = [];
+			}
+
+			this._neighbours.push(neighbour);
 		}
-	}
+	};
 
 	this.costFromStart = {
 		get: function() {
@@ -34,7 +48,7 @@ function AStarNode() {
 		set: function(costFromStart) {
 			this._costFromStart = costFromStart;
 		}
-	}
+	};
 
 	this.estimatedCostToGoal = {
 		get: function() {
@@ -44,10 +58,11 @@ function AStarNode() {
 		set: function(estimatedCostToGoal) {
 			this._estimatedCostToGoal = estimatedCostToGoal;
 		}
-	}
+	};
 
 	this.estimatedCostToGoal.set(Number.MAX_SAFE_INTEGER);
 	this.costFromStart.set(Number.MAX_SAFE_INTEGER);
+	this.neighbours.set([]);
 }
 
 AStarNode.prototype.getCost = function() {
@@ -55,11 +70,20 @@ AStarNode.prototype.getCost = function() {
 }
 
 AStarNode.prototype.getCostToReachNode = function(node) {
-	return 0;
+	var dev = Number.MAX_SAFE_INTEGER;
+
+	if (node != null) {
+		var c1 = cell.get();
+		var c2 = node.cell.get();
+
+		dev = Math.abs(c1 - c2);
+	}
+
+	return dev;
 }
 
 AStarNode.prototype.getEstimatedCostToReachNode = function(node) {
-	return 0;
+	return this.getCostToReachNode(node);
 }
 
 AStarNode.prototype.compareCostWithNode = function(node) {
@@ -154,7 +178,7 @@ AStarSearch.prototype.findPath = function(sourceNode, targetNode) {
 		}
 	}
 
-	if (found) {
+	if (foundPath) {
 		path = targetNode.getPath();
 	}
 
